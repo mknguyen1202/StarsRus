@@ -1,6 +1,7 @@
 package cs174.starsrus.entities;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,22 +11,29 @@ public class Account {
     //TODO
     // Add column annotations
 
-    @Column(name = "")
     private int id;
-
-    @Column(name = "")
     private String username;
-    private BigDecimal balance; // NUMERIC in Database
+	private BigDecimal balance; // NUMERIC in Database
+	private Date createdDate;
 
 
 	public int getId() {
 		return this.id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	
 	public String getUsername() {
 		return this.username;
 	}

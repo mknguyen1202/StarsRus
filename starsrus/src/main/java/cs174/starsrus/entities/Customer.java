@@ -5,13 +5,9 @@ import javax.persistence.Entity;
 
 @Entity
 public class Customer {
-    @Column(name = "")
+
     private String username;
-
-    @Column(name = "")
     private String password;
-
-    @Column(name = "")
     private String name;
     private String state;
     private String phoneNumber;
