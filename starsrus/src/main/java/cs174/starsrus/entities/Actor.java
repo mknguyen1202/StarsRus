@@ -3,12 +3,10 @@ package cs174.starsrus.entities;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import javax.persistence.Entity;
 
-@Entity
 public class Actor {
 
-	    /*
+	/*
     ACTORID(STOCKID),CURRENTPRICE(3/16/2013),NAME,DOB,MovieTitle,Role,Year,Contract
     SKB,40.00,Kim Basinger,8 December 1958,L.A. Confidential,Actor,1997,5000000
     SMD,71.00,Michael Douglas,25 September 1944,A Perfect Murder,Actor,1998,10000000

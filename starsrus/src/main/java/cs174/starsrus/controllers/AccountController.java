@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import cs174.starsrus.entities.MarketAccount;
 import cs174.starsrus.entities.StockAccount;
 
+
 public class AccountController {
     private MarketAccount marketAccount;
     private ArrayList<StockAccount> stockAccounts;

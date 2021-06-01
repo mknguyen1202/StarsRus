@@ -1,3 +1,5 @@
+
+
 CREATE TABLE Administrator (
     admin_username CHAR(30),
     admin_password CHAR(30),
@@ -6,8 +8,10 @@ CREATE TABLE Administrator (
     admin_state CHAR(2),
     admin_phone CHAR(20),
     admin_email CHAR(30),
+    admin_tid CHAR(30),
+    admin_ssn CHAR(20),
     PRIMARY KEY (admin_username)
-)
+);
 
 CREATE TABLE Customer (
     username CHAR(30),
@@ -17,25 +21,27 @@ CREATE TABLE Customer (
     state CHAR(2),
     phone CHAR(20),
     email CHAR(30),
-    ssn CHAR(20),
-    tid CHAR(30)
-)
+    tid CHAR(30),
+    ssn CHAR(20)
+);
 
 CREATE TABLE MarketAccount (
     market_account_id INTEGER NOT NULL,
     balance REAL NOT NULL,
-    balance_date CHAR(20),
-    account_date CHAR(20),
+    balance_date DATE,
+    account_date DATE,
     username CHAR(30),
-    PRIMARY KEY (market_account_id)
+    PRIMARY KEY (market_account_id),
     FOREIGN KEY (username) REFERENCES Customer(username)
-)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
 
 CREATE TABLE StockAccount (
     symbol CHAR(3),
     balance REAL NOT NULL,
     original_buying_price CHAR(20),
-    account_date CHAR(20),
+    account_date DATE,
     username CHAR(30),
     PRIMARY KEY (symbol, username, original_buying_price),
     FOREIGN KEY (username) REFERENCES Customer(username)
@@ -44,26 +50,26 @@ CREATE TABLE StockAccount (
     FOREIGN KEY (symbol) REFERENCES ActorStock(symbol)
         ON UPDATE CASCADE
         CHECK (balance >= 0)
-)
+);
 
 CREATE TABLE ActorStock (
     symbol CHAR(3) NOT NULL,
     actor_name CHAR(30),
     actor_dob CHAR(10),
     actor_movie_title CHAR(30),
-    actor_role CHAR(10)
+    actor_role CHAR(10),
     actor_movie_contract REAL NOT NULL,
-    PRIMARY KEY (actor_id)
-)
+    PRIMARY KEY (symbol)
+);
 
-CREATE TABLE ActorsAndStocks(
-actor_name CHAR(20),
-date_of_birth CHAR(10),
-symbol CHAR(3),
-daily_closing_price REAL,
-current_price REAL,
-PRIMARY KEY (symbol)
-)
+-- CREATE TABLE ActorsAndStocks(
+-- actor_name CHAR(20),
+-- date_of_birth CHAR(10),
+-- symbol CHAR(3),
+-- daily_closing_price REAL,
+-- current_price REAL,
+-- PRIMARY KEY (symbol)
+-- )
 
 CREATE TABLE ActorMovie (
     contract_id INTEGER,
@@ -72,11 +78,11 @@ CREATE TABLE ActorMovie (
     title CHAR(20),
     total_value REAL,
     symbol INTEGER NOT NULL,
-    PRIMARY KEY (mc_id),
+    PRIMARY KEY (contract_id),
     FOREIGN KEY (symbol) REFERENCES ActorsAndStocks
     ON DELETE CASCADE
 	ON UPDATE CASCADE
-)
+);
 
 -- these tables record transactions
 CREATE TABLE Buy (
@@ -88,12 +94,11 @@ CREATE TABLE Buy (
     PRIMARY KEY (buy_id),
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (symbol) REFERENCES ActorStock(symbol)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
-
-)
+        ON UPDATE CASCADE
+);
 
 CREATE TABLE Sell (
     sell_id INTEGER,
@@ -105,12 +110,12 @@ CREATE TABLE Sell (
     PRIMARY KEY (sell_id),
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (symbol) REFERENCES ActorsStock(symbol)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON UPDATE CASCADE
 
-)
+);
 
 CREATE TABLE Deposit (
     deposit_id INTEGER,
@@ -121,7 +126,7 @@ CREATE TABLE Deposit (
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-)
+);
 
 CREATE TABLE Withdraw (
     withdraw_id INTEGER,
@@ -132,15 +137,15 @@ CREATE TABLE Withdraw (
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-)
+);
 
 CREATE TABLE AccrueInterest (
     interest_id INT,
     interest_date DATE,
     total_earnings REAL,
     username CHAR(20),
-    PRIMARY KEY (interst_id),
+    PRIMARY KEY (interest_id),
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-)
+);

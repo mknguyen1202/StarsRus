@@ -1,8 +1,6 @@
 package cs174.starsrus.entities;
 
-import javax.persistence.Entity;
 
-@Entity
 public class Stock {
     
     private String symbol;

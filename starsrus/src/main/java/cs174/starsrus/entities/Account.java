@@ -3,10 +3,7 @@ package cs174.starsrus.entities;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 
-@Entity
 public class Account {
     //TODO
     // Add column annotations
