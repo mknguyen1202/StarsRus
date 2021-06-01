@@ -1,26 +1,38 @@
 package cs174.starsrus.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 
-@Entity
 public class Customer {
-    @Column(name = "")
+
+	// Name,username,password,Address,STATE,Phone,email,TAXID,SSN
     private String username;
-
-    @Column(name = "")
     private String password;
-
-    @Column(name = "")
-    private String name;
+	private String name;
+	private String address;
     private String state;
     private String phoneNumber;
     private String email;
-    private String TID;
+	private String TID;
+	private String ssn;
 
     public Customer() {
         
     }
+
+	public String getSsn() {
+		return ssn;
+	}
+
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	public String getUsername() {
 		return this.username;
