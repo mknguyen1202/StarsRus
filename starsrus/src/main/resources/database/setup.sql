@@ -22,7 +22,8 @@ CREATE TABLE Customer (
     phone CHAR(20),
     email CHAR(30),
     tid CHAR(30),
-    ssn CHAR(20)
+    ssn CHAR(20),
+    PRIMARY KEY (username)
 );
 
 CREATE TABLE MarketAccount (

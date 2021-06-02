@@ -23,33 +23,76 @@ public class CustomerRepository {
 	JdbcTemplate jdbcTemplate;
 
 
-    long count() {
+    public long count() {
         String QUERY = "SELECT COUNT(*) FROM Customer";
         return jdbcTemplate.queryForObject(QUERY, Long.class);
     };
 
-    int create(Customer customer) {
+//     CREATE TABLE Customer (
+//     username CHAR(30),
+//     password CHAR(30),
+//     name CHAR(30),
+//     address CHAR(30),
+//     state CHAR(2),
+//     phone CHAR(20),
+//     email CHAR(30),
+//     tid CHAR(30),
+//     ssn CHAR(20)
+// );
+
+    public int create(Customer customer) {
         String QUERY = "INSERT INTO Customer"
-                       + "VALUE Customer()";
+                       + " VALUES(?,?,?,?,?,?,?,?,?)" ;
         try {
-            jdbcTemplate.execute(QUERY);
+            jdbcTemplate.update(QUERY, 
+                                customer.getUsername(),
+                                customer.getPassword(),
+                                customer.getName(),
+                                customer.getAddress(),
+                                customer.getState(),
+                                customer.getPhoneNumber(),
+                                customer.getEmail(),
+                                customer.getTID(),
+                                customer.getSsn());
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
     };
-    int update(Customer customer) {
-        String QUERY = "UPDATE Customer"
-                        +" SET ";
-
+    
+    public int update(Customer customer) {
+        String QUERY = "UPDATE Customer SET"
+                                    + " password = ?,"
+                                    + " name = ?,"
+                                    + " address = ?,"
+                                    + " state = ?,"
+                                    + " phone = ?,"
+                                    + " email = ?,"
+                                    + " tid = ?,"
+                                    + " ssn = ?"
+                                    + " WHERE username = ?";
+        try {
+            jdbcTemplate.update(QUERY,  customer.getPassword(),
+                                        customer.getName(),
+                                        customer.getAddress(),
+                                        customer.getState(),
+                                        customer.getPhoneNumber(),
+                                        customer.getEmail(),
+                                        customer.getTID(),
+                                        customer.getSsn(), 
+                                        customer.getUsername().trim()); // WHERE
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 0;
     };
 
-    int deleteByUsername(String username) {
-        String QUERY = "DELETE * FROM Customer WHERE username=" + username;
+    public int deleteByUsername(String username) {
+        String QUERY = "DELETE FROM Customer WHERE username = ?";
         try {
-            jdbcTemplate.update(QUERY, new Object[]{username});
+            jdbcTemplate.update(QUERY, username);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
