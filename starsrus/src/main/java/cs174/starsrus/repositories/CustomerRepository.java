@@ -39,6 +39,7 @@ public class CustomerRepository {
         }
         return 0;
     };
+    
     int update(Customer customer) {
         String QUERY = "UPDATE Customer"
                         +" SET ";

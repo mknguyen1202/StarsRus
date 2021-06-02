@@ -1,5 +1,6 @@
 import React from "react";
 import CustomerService from "../services/CustomerService";
+import {ButtonGroup, Button} from "react-bootstrap";
 
 class CustomerComponent extends React.Component {
     constructor (props) {
@@ -14,6 +15,7 @@ class CustomerComponent extends React.Component {
             this.setState({customers: response.data})
         });
     }
+    
     render() {
         return (
             <div>
@@ -27,7 +29,7 @@ class CustomerComponent extends React.Component {
                             <td>Email</td>
                             <td>Phone Number</td>
                             <td>State</td>
-                           
+                            <td>Actions</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +43,13 @@ class CustomerComponent extends React.Component {
                                 <td>{customer.email}</td>
                                 <td>{customer.phoneNumber}</td>
                                 <td>{customer.state}</td>
+                                <td>
+                                    <ButtonGroup>
+                                        <Button variant="primary">EDIT</Button>
+                                        <Button variant="danger">DELETE</Button>
+                                    </ButtonGroup>    
+                                </td>
+                                
                             </tr>
                         )
                     }
