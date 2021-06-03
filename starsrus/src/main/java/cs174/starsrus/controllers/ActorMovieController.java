@@ -25,27 +25,34 @@ public class ActorMovieController {
     @Autowired
     private ActorMovieRepository actorMovieRepository;
 
-    @GetMapping("actorMovie")
+    @GetMapping("actormovie")
     public List<ActorMovie> getActorMovies() {
         return this.actorMovieRepository.findAll();
     }
 
-    @GetMapping("actorMovie/{contract_id}")
-    public ActorMovie getActorMovieByUsername(@PathVariable(value="contract_id") int contract_id) {
-        return this.actorMovieRepository.findByContractId(contract_id);
+    @GetMapping("actormovie/{symbol}")
+    public List<ActorMovie> getActorMovieBySymbol(@PathVariable(value="symbol") String symbol) {
+        return this.actorMovieRepository.findListByContractSymbol(symbol);
     }
 
-    @PostMapping("add_actorMovie")
+    // @GetMapping("actormovie/{contract_id}")
+    // public ActorMovie getActorMovieBySymbol(@PathVariable(value="symbol") String symbol) {
+    //     return this.actorMovieRepository.findByContractSymbol(symbol);
+    // }
+
+
+
+    @PostMapping("add_actormovie")
     public int createActorMovie(@RequestBody ActorMovie actorMovie) {
         return this.actorMovieRepository.create(actorMovie);
     }
 
-    @DeleteMapping("actorMovie/{contract_id}")
+    @DeleteMapping("actormovie/{contract_id}")
     public int deleteActorMovie(@PathVariable(value="contract_id") int contract_id) {
         return this.actorMovieRepository.deleteByContractId(contract_id);
     }
 
-    @PutMapping("add_actorMovie")
+    @PutMapping("add_actormovie")
     public int updateActorMovie(@RequestBody ActorMovie actorMovie){
 
         return this.actorMovieRepository.update(actorMovie);

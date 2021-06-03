@@ -78,17 +78,14 @@ public class ActorMovieRepository {
         return 0;
     }
 
-    
     public List<ActorMovie> findAll() {
         String QUERY = "SELECT * FROM ActorMovie";
         return jdbcTemplate.query(QUERY, new ActorMovieRowMapper());
     };
-
-
-    public ActorMovie findByContractId(int control_id) {
-        String QUERY = "SELECT * FROM ActorMovie WHERE contract_id=?";
-		return jdbcTemplate.queryForObject(QUERY, new Object[] { control_id },
-				new BeanPropertyRowMapper<ActorMovie>(ActorMovie.class));        
+    
+    public List<ActorMovie> findListByContractSymbol(String symbol) {
+        String QUERY = "SELECT * FROM ActorMovie WHERE symbol= \'" + symbol + '\'' ;
+		return jdbcTemplate.query(QUERY ,new ActorMovieRowMapper());        
     };
 
 
