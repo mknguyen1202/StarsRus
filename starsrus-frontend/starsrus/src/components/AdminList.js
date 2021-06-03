@@ -98,7 +98,7 @@ class AdminList extends React.Component {
                                 <td>
                                     <ButtonGroup>
                                         
-                                        <Link to={"edit/"+admin.admin_username} className="btn btn-primary">EDIT</Link>
+                                        <Link to={"edit_admin/"+admin.admin_username} className="btn btn-primary">EDIT</Link>
                                         {" "}
                                         <Button variant="danger" onClick={this.handleShow.bind(this, admin.admin_username)}>DELETE</Button>
                                     </ButtonGroup>    

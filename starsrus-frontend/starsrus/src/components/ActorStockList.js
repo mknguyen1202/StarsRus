@@ -84,7 +84,7 @@ class ActorStockList extends React.Component {
                         this.state.actorstocks.map(
                             actorstock => 
                             <tr key = {actorstock.symbol}>
-                                <td><Link   to={"edit_stock/"+actorstock.symbol} 
+                                <td><Link   to={"actormovie/"+ actorstock.symbol +"/"+ actorstock.actor_name} 
                                             className="btn btn-info text-white"
                                             size="lg">
                                     {actorstock.symbol}
