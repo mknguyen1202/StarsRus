@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 
 import NavigationBar from "./components/NavigationBar";
+import CustomerNavBar from "./components/CustomerNavBar";
 import Home from "./components/Home";
 import { Container } from 'react-bootstrap';
 import Admin from './components/Admin';
@@ -22,6 +23,7 @@ function App() {
     
     <Router>
       <NavigationBar /> 
+      {/* <CustomerNavBar /> */}
         <Container>
         <Switch>
             <Route path="/" exact component={Home} />
