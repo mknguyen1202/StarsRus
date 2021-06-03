@@ -41,6 +41,7 @@ public class CustomerRepository {
 // );
 
     public int create(Customer customer) {
+        //TODO: automatically create and add $1000 to Market account
         String QUERY = "INSERT INTO Customer"
                        + " VALUES(?,?,?,?,?,?,?,?,?)" ;
         try {
