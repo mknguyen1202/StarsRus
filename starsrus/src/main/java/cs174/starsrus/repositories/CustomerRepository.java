@@ -112,6 +112,29 @@ public class CustomerRepository {
     };
 
 
+/*
+    public Customer findByKey(String username, String ssn, String tid) {
+        String QUERY = "SELECT * FROM Customer WHERE username=? AND ssn=? AND tid=?";
+		return jdbcTemplate.queryForObject(QUERY, new Object[] { username, ssn, tid },
+				new BeanPropertyRowMapper<Customer>(Customer.class));        
+    };
+*/
+
+/**
+     public int deleteByKey(String username, String ssn, String tid) {
+        String WHEREstatement = "username=" + "\'" + username + "\'";
+        WHEREstatement += "ssn=" + "\'" + ssn + "\'";
+        WHEREstatement += "tid=" + "\'" + tid + "\'";
+        String QUERY = "DELETE FROM Customer WHERE " + WHEREstatement;
+        try {
+            jdbcTemplate.update(QUERY);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+ */
 
 }
 

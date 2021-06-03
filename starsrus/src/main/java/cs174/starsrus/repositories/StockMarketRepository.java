@@ -38,7 +38,7 @@ public class StockMarketRepository {
                                 stockmarket.getStocktime(),
                                 stockmarket.getCurrent_price(),
                                 stockmarket.getClosing_price(),
-                                stockmarket.get_symbol());
+                                stockmarket.getSymbol());
             return 1;
         } catch (Exception e) {
             e.printStackTrace();

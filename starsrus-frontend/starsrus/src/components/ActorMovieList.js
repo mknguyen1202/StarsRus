@@ -89,8 +89,8 @@ class ActorMovieList extends React.Component {
                 <table className="table table-striped text-center" >
                     <thead>
                         <tr>
-                            <td colspan="2">Actor's Name: {this.props.match.params.actor_name} </td>
-                            <td>Stock Symbol: {this.props.match.params.symbol}</td>
+                            <td colspan="2">Actor's Name: {" "} <Button  variant="outline-info">{this.props.match.params.actor_name}</Button> </td>
+                            <td >Stock Symbol: {" "}<Button className="text-white" variant="info">{this.props.match.params.symbol}</Button></td>
                         </tr>
                         <tr>
                             <td>ID</td>

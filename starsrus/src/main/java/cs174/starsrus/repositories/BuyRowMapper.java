@@ -11,7 +11,7 @@ class BuyRowMapper implements RowMapper<Buy> {
 
     @Override
     public Buy mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Buy buy = new Sell();
+        Buy buy = new Buy();
         buy.set_buy_id(rs.getInt("buy_id"));
         buy.set_buy_date(rs.getString("buy_date"));
         buy.set_buy_shares(rs.getFloat("buy_shares"));
