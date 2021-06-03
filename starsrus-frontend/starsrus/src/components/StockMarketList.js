@@ -98,7 +98,7 @@ class StockMarketList extends React.Component {
                                 <td>
                                     <ButtonGroup>
                                         
-                                        <Link to={"edit_stock/"+actorstock.symbol} className="btn btn-primary">EDIT</Link>
+                                        <Link to={"edit_stockmarket/"+actorstock.symbol} className="btn btn-primary">EDIT</Link>
                                         {" "}
                                         <Button variant="danger" onClick={this.handleShow.bind(this, actorstock.symbol)}>DELETE</Button>
                                     </ButtonGroup>    
