@@ -15,6 +15,7 @@ import CustomerList from './components/CustomerList';
 import ActorStock from './components/ActorStock';
 import ActorStockList from './components/ActorStockList';
 import ActorMovieList from './components/ActorMovieList';
+import StockMarketList from './components/StockMarketList';
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
             <Route path="/edit_stock/:symbol" exact component={ActorStock} />
             
             <Route path="/actormovie/:symbol/:actor_name" exact component={ActorMovieList} />
+
+
+            <Route path="/stockmarket" exact component={StockMarketList} />
+
         </Switch>
         </Container>
       </Router>
