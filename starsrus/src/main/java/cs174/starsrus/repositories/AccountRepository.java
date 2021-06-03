@@ -18,8 +18,9 @@ public class AccountRepository  {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-    long count() {
-        return 0;
+    public long count() {
+        String QUERY = "SELECT COUNT(*) FROM Buy";
+        return jdbcTemplate.queryForObject(QUERY, Long.class);
     };
 
     int create(Account account) {
