@@ -1,41 +1,40 @@
 import React, {useState} from "react";
-import CustomerService from "../services/CustomerService";
+import ActorStockService from "../services/ActorStockService";
 import {ButtonGroup, Button, Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
-
-class CustomerList extends React.Component {
+class ActorStockList extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
-            customers:[],
+            actorstocks:[],
             show: false,
-            username: "",
+            symbol: "",
         };
         this.handleClose = this.handleClose.bind(this.state);
         this.handleShow = this.handleShow.bind(this);
     }
 
     componentDidMount() {
-        CustomerService.getCustomers().then((response) => {
-            this.setState({customers: response.data})
+        ActorStockService.getActorStocks().then((response) => {
+            this.setState({actorstocks: response.data})
         });
     }
 
-    deleteCustomer = (username) => {
-            console.log(username);
-            CustomerService.deleteCustomer(username)
+    deleteActorStock = (symbol) => {
+            console.log(symbol);
+            ActorStockService.deleteActorStock(symbol)
             .then(response => {
                 console.log(response);
                 if (response.data != 0) {
                     
-                    alert("Customer Deleted Successfully!");
+                    alert("ActorStock Deleted Successfully!");
                     this.setState({
-                        customers: this.state.customers.filter(customer => customer.username != username)
+                        actorstocks: this.state.actorstocks.filter(actorstock => actorstock.symbol != symbol)
                     });
                     this.handleClose();
                 } else {
-                    alert("Cannot delete customers. Something went wrong");
+                    alert("Cannot delete actorstocks. Something went wrong");
                 }
             }).catch (e => {
                 console.log(e);
@@ -43,10 +42,10 @@ class CustomerList extends React.Component {
         
     }
 
-    handleShow = (deleteusername) => { 
+    handleShow = (deletesymbol) => { 
         this.setState({
             show: true,
-            username: deleteusername
+            symbol: deletesymbol
         });
     };
     handleClose = e => { 
@@ -63,43 +62,37 @@ class CustomerList extends React.Component {
 
         return (
             <div>
-                <h1 className="text-center"> Customer List </h1>
+                <h1 className="text-center"> Actor-Stock List </h1>
                 <p>
-                <Link to="/add_customer" className="btn btn-success">Add Customer</Link>
+                <Link to="/add_stock" className="btn btn-success">Add New Stock</Link>
 
                 </p>
-                <table className="table table-striped" >
+                <table className="table table-striped text-center" >
                     <thead>
                         <tr>
-                            <td>Username</td>
-                            <td>Full Name</td>
-                            <td>Address</td>
-                            <td>Email</td>
-                            <td>Phone Number</td>
-                            <td>State</td>
+                            <td>Symbol</td>
+                            <td>Actor's Full Name</td>
+                            <td>Date of Birth (DD-MM-YYYY)</td>
                             <td>Actions</td>
                         </tr>
                     </thead>
                     <tbody>
-                    {   this.state.customers.length === 0 ?
-                        <tr colSpan="6"> No Customer Available.
+                    {   this.state.actorstocks.length === 0 ?
+                        <tr colSpan="6"> No ActorStock Available.
                         </tr>
                         :
-                        this.state.customers.map(
-                            customer => 
-                            <tr key = {customer.username}>
-                                <td>{customer.username}</td>
-                                <td>{customer.name}</td>
-                                <td>{customer.address}</td>
-                                <td>{customer.email}</td>
-                                <td>{customer.phoneNumber}</td>
-                                <td>{customer.state}</td>
+                        this.state.actorstocks.map(
+                            actorstock => 
+                            <tr key = {actorstock.symbol}>
+                                <td>{actorstock.symbol}</td>
+                                <td>{actorstock.actor_name}</td>
+                                <td>{actorstock.actor_dob}</td>
                                 <td>
                                     <ButtonGroup>
                                         
-                                        <Link to={"edit_customer/"+customer.username} className="btn btn-primary">EDIT</Link>
+                                        <Link to={"edit_stock/"+actorstock.symbol} className="btn btn-primary">EDIT</Link>
                                         {" "}
-                                        <Button variant="danger" onClick={this.handleShow.bind(this, customer.username)}>DELETE</Button>
+                                        <Button variant="danger" onClick={this.handleShow.bind(this, actorstock.symbol)}>DELETE</Button>
                                     </ButtonGroup>    
 
                                     {/* THIS IS FOR CONFIRMATION FORM*/}
@@ -109,16 +102,16 @@ class CustomerList extends React.Component {
                                         <Modal.Title>Warning!</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <p>Are you sure you want to delete this customer?</p>
+                                            <p>Are you sure you want to delete this stock?</p>
                                             
-                                            <p><b>{this.state.username}</b></p>
+                                            <p><b>{this.state.symbol}</b></p>
                                         </Modal.Body>
                                         <Modal.Footer>
                                         <Button variant="secondary" onClick={this.handleClose}>
                                             No
                                         </Button>
-                                        <Button variant="warning" onClick={this.deleteCustomer.bind(this, this.state.username)}>
-                                            Delete Customer
+                                        <Button variant="warning" onClick={this.deleteActorStock.bind(this, this.state.symbol)}>
+                                            Delete ActorStock
                                         </Button>
                                         </Modal.Footer>
                                     </Modal>
@@ -133,4 +126,4 @@ class CustomerList extends React.Component {
     }
 }
 
-export default CustomerList;
+export default ActorStockList;
