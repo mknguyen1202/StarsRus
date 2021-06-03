@@ -15,7 +15,7 @@ class SellRowMapper implements RowMapper<Sell> {
         sell.set_sell_id(rs.getInt("sell_id"));
         sell.set_sell_date(rs.getString("sell_date"));
         sell.set_sell_shares(rs.getFloat("sell_shares"));
-        sell.set_earnings_from_sale(rs.getString("earnings_from_sale"));
+        sell.set_earnings_from_sale(rs.getFloat("earnings_from_sale"));
         sell.set_username(rs.getString("username"));
         sell.set_symbol(rs.getString("symbol"));
 

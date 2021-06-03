@@ -3,8 +3,6 @@ package cs174.starsrus.entities;
 
 public class Admin {
 
-
-    
     private String admin_username;
     private String admin_password;
     private String admin_name;
