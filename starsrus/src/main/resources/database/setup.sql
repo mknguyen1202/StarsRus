@@ -1,6 +1,6 @@
 
 
-CREATE TABLE Administrator (
+CREATE TABLE IF NOT EXISTS Administrator (
     admin_username CHAR(30),
     admin_password CHAR(30),
     admin_name CHAR(30),
@@ -13,7 +13,7 @@ CREATE TABLE Administrator (
     PRIMARY KEY (admin_username)
 );
 
-CREATE TABLE Customer (
+CREATE TABLE IF NOT EXISTS Customer (
     username CHAR(30),
     password CHAR(30),
     name CHAR(30),
@@ -26,7 +26,7 @@ CREATE TABLE Customer (
     PRIMARY KEY (username)
 );
 
-CREATE TABLE MarketAccount (
+CREATE TABLE IF NOT EXISTS MarketAccount (
     market_account_id INTEGER NOT NULL,
     balance REAL NOT NULL,
     balance_date DATE,
@@ -38,7 +38,7 @@ CREATE TABLE MarketAccount (
         ON DELETE CASCADE
 );
 
-CREATE TABLE StockAccount (
+CREATE TABLE IF NOT EXISTS StockAccount (
     symbol CHAR(3),
     balance REAL NOT NULL,
     original_buying_price CHAR(20),
@@ -53,17 +53,15 @@ CREATE TABLE StockAccount (
         CHECK (balance >= 0)
 );
 
-CREATE TABLE ActorStock (
+CREATE TABLE IF NOT EXISTS ActorStock (
     symbol CHAR(3) NOT NULL,
     actor_name CHAR(30),
     actor_dob CHAR(10),
-    actor_movie_title CHAR(30),
-    actor_role CHAR(10),
-    actor_movie_contract REAL NOT NULL,
     PRIMARY KEY (symbol)
+
 );
 
--- CREATE TABLE ActorsAndStocks(
+-- CREATE TABLE IF NOT EXISTS ActorsAndStocks(
 -- actor_name CHAR(20),
 -- date_of_birth CHAR(10),
 -- symbol CHAR(3),
@@ -72,22 +70,34 @@ CREATE TABLE ActorStock (
 -- PRIMARY KEY (symbol)
 -- )
 
-CREATE TABLE ActorMovie (
-    contract_id INTEGER,
+CREATE TABLE IF NOT EXISTS StockMarket(
+    stocktime TEXT,
+    current_price REAL,
+    closing_price REAL,
+    symbol CHAR(3),
+    PRIMARY KEY (symbol, stocktime),
+    FOREIGN KEY (symbol) REFERENCES ActorStock(symbol)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS ActorMovie (
+    contract_id INTEGER AUTO INCREMENT,
     contract_year INTEGER,
     actor_role CHAR(20),
     title CHAR(20),
     total_value REAL,
     symbol INTEGER NOT NULL,
     PRIMARY KEY (contract_id),
-    FOREIGN KEY (symbol) REFERENCES ActorsAndStocks
-    ON DELETE CASCADE
-	ON UPDATE CASCADE
+    FOREIGN KEY (symbol) REFERENCES ActorStock(symbol)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 -- these tables record transactions
-CREATE TABLE Buy (
-    buy_id INTEGER,
+CREATE TABLE IF NOT EXISTS Buy (
+    buy_id INTEGER AUTO INCREMENT,
     buy_date DATE,
     buy_shares REAL,
     username CHAR(30) NOT NULL,
@@ -96,13 +106,13 @@ CREATE TABLE Buy (
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (symbol) REFERENCES ActorStock(symbol)
+    FOREIGN KEY (symbol) REFERENCES StockMarket(symbol)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Sell (
-    sell_id INTEGER,
+CREATE TABLE IF NOT EXISTS Sell (
+    sell_id INTEGER AUTO INCREMENT,
     sell_date DATE,
     sell_shares REAL,
     earnings_from_sale REAL,
@@ -112,14 +122,14 @@ CREATE TABLE Sell (
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (symbol) REFERENCES ActorsStock(symbol)
+    FOREIGN KEY (symbol) REFERENCES StockMarket(symbol)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 
 );
 
-CREATE TABLE Deposit (
-    deposit_id INTEGER,
+CREATE TABLE IF NOT EXISTS Deposit (
+    deposit_id INTEGER AUTO INCREMENT,
     deposit_date DATE,
     deposit_amount REAL,
     username CHAR(30),
@@ -129,8 +139,8 @@ CREATE TABLE Deposit (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Withdraw (
-    withdraw_id INTEGER,
+CREATE TABLE IF NOT EXISTS Withdraw (
+    withdraw_id INTEGER AUTO INCREMENT,
     withdraw_date DATE,
     withdraw_amount REAL,
     username CHAR(30),
@@ -140,8 +150,8 @@ CREATE TABLE Withdraw (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE AccrueInterest (
-    interest_id INT,
+CREATE TABLE IF NOT EXISTS AccrueInterest (
+    interest_id INT AUTO INCREMENT,
     interest_date DATE,
     total_earnings REAL,
     username CHAR(20),
