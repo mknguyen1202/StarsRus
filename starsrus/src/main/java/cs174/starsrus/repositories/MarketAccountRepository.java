@@ -86,7 +86,7 @@ public class MarketAccountRepository {
     public MarketAccount findByMarketAccountID(int id) {
         String QUERY = "SELECT * FROM MarketAccount WHERE market_account_id=?";
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { id },
-				new BeanPropertyRowMapper<Buy>(Buy.class));        
+				new BeanPropertyRowMapper<MarketAccount>(MarketAccount.class));        
     };
 
 }

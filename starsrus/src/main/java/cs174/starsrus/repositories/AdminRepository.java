@@ -110,8 +110,5 @@ public class AdminRepository {
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { username },
 				new BeanPropertyRowMapper<Admin>(Admin.class));        
     };
-
-
-
 }
 

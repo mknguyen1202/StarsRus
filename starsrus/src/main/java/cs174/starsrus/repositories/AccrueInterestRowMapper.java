@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import cs174.starsrus.entities.AccrueInterest;
 
-class AccrueInterestRowMapper implements RowMapper<Customer> {
+class AccrueInterestRowMapper implements RowMapper<AccrueInterest> {
 
     @Override
     public AccrueInterest mapRow(ResultSet rs, int rowNum) throws SQLException {
