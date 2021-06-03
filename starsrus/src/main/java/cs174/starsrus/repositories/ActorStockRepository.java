@@ -42,7 +42,7 @@ public class ActorStockRepository {
     public int update(ActorStock actorStock) {
         String QUERY = "UPDATE ActorStock SET"
                                     + " actor_name = ?,"
-                                    + " actor_dob = ?,"
+                                    + " actor_dob = ?"
                                     + " WHERE symbol = ?";
         try {
             jdbcTemplate.update(QUERY,  actorStock.getActor_name(),

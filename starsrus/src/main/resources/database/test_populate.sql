@@ -37,7 +37,7 @@ VALUES("cindy","la","Cindy Laugher","7000 Hollister SB","CA","(805)6930011","cin
 -- );
 
 INSERT INTO ActorStock
-VALUES("SKB", "Kim Basinger", "8-12-1958");
+VALUES("SKB", "Kim Basinger", "08-12-1958");
 
 INSERT INTO ActorStock
 VALUES("SMD", "Michael Douglas", "25-09-1944");
