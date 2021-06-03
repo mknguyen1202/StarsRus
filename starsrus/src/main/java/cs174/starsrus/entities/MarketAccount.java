@@ -10,8 +10,6 @@ public class MarketAccount {
     private String username;
 
 
-     public Withdraw(){}
-
 
     public int get_market_account_id() {
         return market_account_id;

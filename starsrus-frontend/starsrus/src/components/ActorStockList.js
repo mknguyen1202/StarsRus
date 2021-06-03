@@ -91,7 +91,7 @@ class ActorStockList extends React.Component {
                                     </Link>
                                 </td>
                                 <td>{actorstock.actor_name}</td>
-                                <td>{actorstock.actor_dob}</td>
+                                <td >{actorstock.actor_dob}</td>
                                 <td>
                                     <ButtonGroup>
                                         

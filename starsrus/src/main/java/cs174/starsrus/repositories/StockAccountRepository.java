@@ -59,7 +59,7 @@ public class StockAccountRepository {
                                         stockaccount.get_original_buying_price(),
                                         stockaccount.get_account_date(),
                                         stockaccount.get_username(),
-                                        stockaccount.getSymbol()); // WHERE
+                                        stockaccount.get_symbol()); // WHERE
             return 1;
         } catch (Exception e) {
             e.printStackTrace();

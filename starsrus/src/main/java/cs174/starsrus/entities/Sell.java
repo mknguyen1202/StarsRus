@@ -54,11 +54,11 @@ public class Sell {
 		this.symbol = sym;
     }
 
-    public String get_earnings_from_sale() {
+    public float get_earnings_from_sale() {
         return earnings_from_sale;
     }
 
-    public void set_earnings_from_sale(String earnings) {
+    public void set_earnings_from_sale(float earnings) {
 		this.earnings_from_sale = earnings;
     }    
 }

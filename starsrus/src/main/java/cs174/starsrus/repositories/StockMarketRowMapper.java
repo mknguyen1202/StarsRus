@@ -11,11 +11,11 @@ class StockMarketRowMapper implements RowMapper<StockMarket> {
 
     @Override
     public StockMarket mapRow(ResultSet rs, int rowNum) throws SQLException {
-        StockMarket stockmarket = new Sell();
+        StockMarket stockmarket = new StockMarket();
         stockmarket.setStocktime(rs.getString("stocktime"));
         stockmarket.setCurrent_price(rs.getDouble("current_price"));
         stockmarket.setClosing_price(rs.getDouble("closing_price"));
-        stockmarket.set_symbol(rs.getString("symbol"));
+        stockmarket.setSymbol(rs.getString("symbol"));
 
         return stockmarket;
     }
