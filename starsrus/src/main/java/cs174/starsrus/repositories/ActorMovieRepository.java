@@ -67,7 +67,7 @@ public class ActorMovieRepository {
         return 0;
     };
 
-    public int deleteByContractId(String contract_id) {
+    public int deleteByContractId(int contract_id) {
         String QUERY = "DELETE FROM ActorMovie WHERE contract_id = ?";
         try {
             jdbcTemplate.update(QUERY, contract_id);
@@ -78,11 +78,14 @@ public class ActorMovieRepository {
         return 0;
     }
 
+    
     public List<ActorMovie> findAll() {
         String QUERY = "SELECT * FROM ActorMovie";
         return jdbcTemplate.query(QUERY, new ActorMovieRowMapper());
     };
-    public ActorMovie findByUsername(int control_id) {
+
+
+    public ActorMovie findByContractId(int control_id) {
         String QUERY = "SELECT * FROM ActorMovie WHERE contract_id=?";
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { control_id },
 				new BeanPropertyRowMapper<ActorMovie>(ActorMovie.class));        

@@ -68,7 +68,7 @@ class CustomerList extends React.Component {
                 <Link to="/add_customer" className="btn btn-success">Add Customer</Link>
 
                 </p>
-                <table className="table table-striped" >
+                <table className="table table-striped text-center" >
                     <thead>
                         <tr>
                             <td>Username</td>
@@ -82,7 +82,7 @@ class CustomerList extends React.Component {
                     </thead>
                     <tbody>
                     {   this.state.customers.length === 0 ?
-                        <tr colSpan="6"> No Customer Available.
+                        <tr> <td  colspan="7">No Customer Available.</td>
                         </tr>
                         :
                         this.state.customers.map(
