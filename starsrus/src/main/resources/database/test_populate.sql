@@ -72,3 +72,18 @@ VALUES(1998, "Actor", "A Perfect Murder", 10000000, "SMD");
 
 INSERT INTO ActorMovie(contract_year, actor_role, title, total_value, symbol)
 VALUES(1996, "Actor", "Jerry Maguire", 5000000, "STC");
+<<<<<<< HEAD
+
+
+
+
+INSERT INTO Administrator
+VALUES("billy","cl","Billy Clinton","5777 Hollister SB","CA","(805)5629999","billy@yahoo.com","3045","606-76-7903")
+;
+
+
+INSERT INTO Administrator
+VALUES("cindy","la","Cindy Laugher","7000 Hollister SB","CA","(805)6930011","cindy@hotmail.com","2034","606-70-7900")
+;
+=======
+>>>>>>> 24f6f38006461866701da2e528772136895680bd

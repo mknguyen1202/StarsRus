@@ -22,8 +22,6 @@ class CustomerService {
     updateCustomer(data) {
         return axios.put("http://localhost:8080/api/add_customer", data);
     }
-
-
 }
 
 export default new CustomerService();
