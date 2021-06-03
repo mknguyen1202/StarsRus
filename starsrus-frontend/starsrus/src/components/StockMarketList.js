@@ -7,7 +7,7 @@ class StockMarketList extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
-            actorstocks:[],
+            stockmarkets:[],
             show: false,
             symbol: "",
         };
@@ -17,7 +17,8 @@ class StockMarketList extends React.Component {
 
     componentDidMount() {
         StockMarketService.get().then((response) => {
-            this.setState({actorstocks: response.data})
+            console.log("AAAAAAAAAAAAAAAA================", response.data);
+            this.setState({stockmarkets: response.data})
         });
     }
 
@@ -25,16 +26,16 @@ class StockMarketList extends React.Component {
             console.log(symbol);
             StockMarketService.delete(symbol)
             .then(response => {
-                console.log(response);
+                
                 if (response.data != 0) {
                     
                     alert(" Deleted Successfully!");
                     this.setState({
-                        actorstocks: this.state.actorstocks.filter(actorstock => actorstock.symbol != symbol)
+                        stockmarkets: this.state.stockmarkets.filter(stockmarket => stockmarket.symbol != symbol)
                     });
                     this.handleClose();
                 } else {
-                    alert("Cannot delete actorstocks. Something went wrong");
+                    alert("Cannot delete stockmarkets. Something went wrong");
                 }
             }).catch (e => {
                 console.log(e);
@@ -64,8 +65,15 @@ class StockMarketList extends React.Component {
             <div>
                 <h1 className="text-center"> Overall Market Stock List </h1>
                 <p>
-                <Link to="/add_stock" className="btn btn-success">Add New Stock</Link>
+                <Link to="/add_stockmarket" className="btn btn-success">Open Market</Link>
+                
+                {" "}
 
+                <Link to="/add_stockmarket" className="btn btn-warning">Close Market</Link>
+
+                </p>
+                <p>
+                    {/* {this.state.stockmarkets[0].closing_price? "The Market is Closed" : "The Market is Open."} */}
                 </p>
                 <table className="table table-striped text-center" >
                     <thead>
@@ -80,27 +88,29 @@ class StockMarketList extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                    {   this.state.actorstocks.length === 0 ?
+                    {   this.state.stockmarkets.length === 0 ?
                         <tr> <td  colspan="6">No Stock Available.</td>
                         </tr>
                         :
-                        this.state.actorstocks.map(
-                            actorstock => 
-                            <tr key = {actorstock.symbol}>
-                                <td><Link   to={"actormovie/"+ actorstock.symbol +"/"+ actorstock.actor_name} 
+                        this.state.stockmarkets.map(
+                            stockmarket => 
+                            <tr key = {stockmarket.symbol}>
+                                <td><Link   to={"actormovie/"+ stockmarket.symbol +"/"+ stockmarket.actor_name} 
                                             className="btn btn-info text-white"
                                             size="lg">
-                                    {actorstock.symbol}
+                                    {stockmarket.symbol}
                                     </Link>
                                 </td>
-                                <td>{actorstock.actor_name}</td>
-                                <td >{actorstock.actor_dob}</td>
+                                <td >{stockmarket.stocktime}</td>
+                                <td >{stockmarket.current_price}</td>
+                                <td> {}</td>
+                                <td >{stockmarket.closing_price}</td>
                                 <td>
                                     <ButtonGroup>
                                         
-                                        <Link to={"edit_stockmarket/"+actorstock.symbol} className="btn btn-primary">EDIT</Link>
+                                        <Link to={"edit_stockmarket/"+stockmarket.symbol} className="btn btn-primary">EDIT</Link>
                                         {" "}
-                                        <Button variant="danger" onClick={this.handleShow.bind(this, actorstock.symbol)}>DELETE</Button>
+                                        <Button variant="danger" onClick={this.handleShow.bind(this, stockmarket.symbol)}>DELETE</Button>
                                     </ButtonGroup>    
 
                                     {/* THIS IS FOR CONFIRMATION FORM*/}

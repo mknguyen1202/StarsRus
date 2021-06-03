@@ -76,7 +76,7 @@ public class StockMarketRepository {
     }
 
     public List<StockMarket> findAll() {
-        String QUERY = "SELECT * FROM StockMarket";
+        String QUERY = "SELECT * FROM (SELECT * FROM StockMarket ORDER BY stocktime DESC) GROUP BY symbol;";
         return jdbcTemplate.query(QUERY, new StockMarketRowMapper());
     };
     public StockMarket findBySymbol(String id) {

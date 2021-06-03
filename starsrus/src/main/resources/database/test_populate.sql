@@ -194,6 +194,9 @@ FROM StockMarket S1, StockMarket S2
 WHERE S1.symbol != S2.symbol
 ORDER BY S1.stocktime DESC;
 
+
+SELECT * FROM (SELECT * FROM StockMarket ORDER BY stocktime DESC)
+GROUP BY symbol;
 --------------------------------------------------------- STOCK ACCOUNT
 
 -- CREATE TABLE IF NOT EXISTS StockAccount (
