@@ -242,8 +242,6 @@ GROUP BY symbol;
 
 
 
-<<<<<<< HEAD
-=======
 
 -- CREATE TABLE IF NOT EXISTS Withdraw (
 --     withdraw_id INTEGER AUTO INCREMENT,
@@ -298,4 +296,9 @@ FROM Deposit D
 JOIN (SELECT * FROM Withdraw) AS W
 ON D.username = W.username
 WHERE D.username = "olive";
->>>>>>> 6479daeae770998d99f56492d68a994b6a4b8548
+
+
+
+SELECT * FROM StockMarket WHERE stocktime > Datetime('now', '-5 minutes');
+
+SELECT DATETIME('now');

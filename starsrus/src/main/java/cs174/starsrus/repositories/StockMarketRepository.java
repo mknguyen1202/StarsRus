@@ -55,7 +55,7 @@ public class StockMarketRepository {
         List<StockMarket> fromLastData = findAll();
    
         String QUERY = "INSERT INTO StockMarket(stocktime, current_price, closing_price, symbol)"
-                       + " VALUES(DATETIME('now'),?,?,?)" ;
+                       + " VALUES(DATETIME('now', 'localtime'),?,?,?)" ;
    
         try {
             for (StockMarket s : fromLastData) {
