@@ -17,7 +17,6 @@ class Withdraw extends Component {
 
     initialState = {
         
-
         withdraw_id:"",
         withdraw_date:"",
         withdraw_amount:"",

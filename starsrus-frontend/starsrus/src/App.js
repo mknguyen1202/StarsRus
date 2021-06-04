@@ -21,6 +21,8 @@ import StockMarketChangePrice from './components/StockMarketChangePrice';
 
 import MyAccount from './components/MyAccount';
 import Withdraw from './components/Withdraw';
+import Deposit from './components/Deposit';
+import MyStocks from './components/MyStocks';
 
 
 function App() {
@@ -77,11 +79,11 @@ function App() {
 
             <Route path="/myaccount" exact component={MyAccount} />
             <Route path="/withdraw" exact component={Withdraw} />
+            <Route path="/deposit" exact component={Deposit} />
 
+            <Route path="/mystocks" exact component={MyStocks} />
 
             <Route path="/actormovie/:symbol/:actor_name" exact component={ActorMovieList} />
-
-
 
             <Route path="/stockmarket" exact component={StockMarketList} />
             <Route path="/add_stockmarket/:symbol/:stocktime" exact component={StockMarketChangePrice} />

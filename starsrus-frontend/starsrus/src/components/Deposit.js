@@ -7,8 +7,8 @@ class Deposit extends Component {
     constructor(props) {
         super(props);
         this.state = this.initialState;
-        this.withdrawChange = this.withdrawChange.bind(this);
-        this.add_withdraw_button = this.add_withdraw_button.bind(this);
+        this.depositChange = this.depositChange.bind(this);
+        this.add_deposit_button = this.add_deposit_button.bind(this);
     }
 
     // {"username":"alfred","password":"hi","name":"Alfred Hitchcock",
@@ -16,30 +16,29 @@ class Deposit extends Component {
     // "email":"alfred@hotmail.com","ssn":"606-76-7900","tid":"1022"}
 
     initialState = {
-        
-
-        withdraw_id:"",
-        withdraw_date:"",
-        withdraw_amount:"",
+    
+        deposit_id:"",
+        deposit_date:"",
+        deposit_amount:"",
         username:""
     }
 
     componentDidMount() {
-        const withdraw_id =  this.props.match.params.withdraw_id;
-        console.log(withdraw_id);
-        if (withdraw_id) {
-            this.findByDepositID(withdraw_id);
+        const deposit_id =  this.props.match.params.deposit_id;
+        console.log(deposit_id);
+        if (deposit_id) {
+            this.findByDepositID(deposit_id);
         }
     }
 
-    findByDepositID = (withdraw_id) => {
-        DepositService.editDeposit(withdraw_id)
+    findByDepositID = (deposit_id) => {
+        DepositService.editDeposit(deposit_id)
         .then(response =>  {
             if (response.data != 0) {
                 this.setState({
-                    withdraw_id: response.data.withdraw_id,
-                    withdraw_date: response.data.withdraw_date,
-                    withdraw_amount: response.data.withdraw_amount,
+                    deposit_id: response.data.deposit_id,
+                    deposit_date: response.data.deposit_date,
+                    deposit_amount: response.data.deposit_amount,
                     username: response.data.username
                 });
             }
@@ -52,19 +51,19 @@ class Deposit extends Component {
     updateDeposit = event => {
         event.preventDefault();
 
-        const withdraw = {
-            withdraw_id: this.state.withdraw_id,
-            withdraw_date: this.state.withdraw_date,
-            withdraw_amount: this.state.withdraw_amount,
+        const deposit = {
+            deposit_id: this.state.deposit_id,
+            deposit_date: this.state.deposit_date,
+            deposit_amount: this.state.deposit_amount,
             username: this.state.username
         }
-        DepositService.updateDeposit(withdraw)
+        DepositService.updateDeposit(deposit)
         .then(response => {
             if (response.data != 0) {
                 this.setState(this.initialState);
                 alert("Deposit Updated Successfully!");
             } else {
-                alert("Cannot upate withdraw. Something wrong!");
+                alert("Cannot upate deposit. Something wrong!");
             }
         })
     }
@@ -73,24 +72,24 @@ class Deposit extends Component {
         this.setState(() => this.initialState);
     }
 
-    add_withdraw_button(event) {
-        alert("Are you sure you want to add new withdraw?");
+    add_deposit_button(event) {
+        alert("Are you sure you want to add new deposit?");
         event.preventDefault();
 
-        const newwithdraw = {
-            withdraw_id: this.state.withdraw_id,
-            withdraw_date: this.state.withdraw_date,
-            withdraw_amount: this.state.withdraw_amount,
+        const newdeposit = {
+            deposit_id: this.state.deposit_id,
+            deposit_date: this.state.deposit_date,
+            deposit_amount: this.state.deposit_amount,
             username: this.state.username
         };
 
-        DepositService.createDeposit(newwithdraw)
+        DepositService.createDeposit(newdeposit)
         .then(response => {
             if (response.data != 0) {
                 this.setState(this.initialState);
                 alert("Deposit Added Successfully!");
             } else {
-                alert("Cannot add withdraw. Username might already exist!");
+                alert("Cannot add deposit. Username might already exist!");
             }
         }).catch (e => {
             console.log(e);
@@ -99,28 +98,28 @@ class Deposit extends Component {
 
     }
 
-    withdrawChange(event) {
+    depositChange(event) {
         this.setState({
             [event.target.name]:event.target.value
         });
     }
 
-    withdrawPasswordChange(event) {
+    depositPasswordChange(event) {
         this.setState({
             [event.target.name]:event.target.value
         });
     }
     render() {
         const {
-            withdraw_id,
-            withdraw_date,
-            withdraw_amount,
+            deposit_id,
+            deposit_date,
+            deposit_amount,
             username
         } = this.state;
         return (
             <>
 
-                <h1 className="text-center">{this.props.match.params.withdraw_id ? "Edit withdraw" : "Add New withdraw"} </h1>
+                <h1 className="text-center">{this.props.match.params.deposit_id ? "Edit deposit" : "Add New deposit"} </h1>
           
             <Card className={"mb3"}>
                 {/* <Card.Header>
@@ -128,19 +127,19 @@ class Deposit extends Component {
                 </Card.Header> */}
                 
 
-            <Form onSubmit={this.add_withdraw_button} id="withdrawFormId" >
+            <Form onSubmit={this.add_deposit_button} id="depositFormId" >
                 <Card.Body>
                     <Form.Row>
 
-                        <Form.Group as={Col} controlId="formGridwithdraw_id">
-                            <Form.Label>withdraw ID</Form.Label>
+                        <Form.Group as={Col} controlId="formGriddeposit_id">
+                            <Form.Label>deposit ID</Form.Label>
                             <Form.Control 
                                 type="test"
-                                name="withdraw_id"
-                                value={withdraw_id}
-                                onChange={this.withdrawChange}
+                                name="deposit_id"
+                                value={deposit_id}
+                                onChange={this.depositChange}
                                 className={"mb3"}
-                                placeholder="Enter your withdraw id. Maximum 20 Characters" 
+                                placeholder="Enter your deposit id. Maximum 20 Characters" 
                                 maxLength="20"
                             />
                         </Form.Group>
@@ -151,7 +150,7 @@ class Deposit extends Component {
                                 type="test" 
                                 name="username"
                                 value={username}
-                                onChange={this.withdrawChange}
+                                onChange={this.depositChange}
                                 className={"mb3"}
                                 placeholder="Enter Deposit username. Maximum 20 Characters" 
                                 maxLength="20"
@@ -161,26 +160,26 @@ class Deposit extends Component {
                     </Form.Row>
 
                     <Form.Row>
-                        <Form.Group as={Col} controlId="formGridwithdraw_date">
+                        <Form.Group as={Col} controlId="formGriddeposit_date">
                             <Form.Label >Deposit Date</Form.Label>
                             <Form.Control 
                                 type="test"
-                                name="withdraw_date"
-                                value={withdraw_date}
-                                onChange={this.withdrawChange}
+                                name="deposit_date"
+                                value={deposit_date}
+                                onChange={this.depositChange}
                                 className={"mb3"}
-                                placeholder="Enter withdraw date. Maximum 20 Characters" 
+                                placeholder="Enter deposit date. Maximum 20 Characters" 
                                 maxLength="20"
                             />
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridwithdraw_amount">
+                        <Form.Group as={Col} controlId="formGriddeposit_amount">
                             <Form.Label>Deposit Amount</Form.Label>
                             <Form.Control  
                                 type="test"
-                                name="withdraw_amount"
-                                value={withdraw_amount}
-                                onChange={this.withdrawChange}
+                                name="deposit_amount"
+                                value={deposit_amount}
+                                onChange={this.depositChange}
                                 className={"mb3"}
                                 placeholder="Deposit Amount"
                                 maxLength="20"
@@ -191,7 +190,7 @@ class Deposit extends Component {
                 </Card.Body>
 
                 <Card.Footer className="text-right">
-                    <Button type="summit" variant="success" onClick={this.props.match.params.username ? this.updateDeposit : this.add_withdraw_button}>
+                    <Button type="summit" variant="success" onClick={this.props.match.params.username ? this.updateDeposit : this.add_deposit_button}>
                         {this.props.match.params.username ? "Edit Deposit" : "Add Deposit"}
                     </Button>
                     {" "}
