@@ -85,7 +85,5 @@ public class WithdrawRepository {
 				new BeanPropertyRowMapper<Withdraw>(Withdraw.class));        
     };
 
-
-
 }
 
