@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 // import org.springframework.data.repository.CrudRepository;
 
 import cs174.starsrus.entities.Deposit;
+import cs174.starsrus.entities.Withdraw;
 
 
 
@@ -85,7 +86,16 @@ public class DepositRepository {
 				new BeanPropertyRowMapper<Deposit>(Deposit.class));        
     };
 
-
+    public List<Deposit> MarketTransactionHistory(){
+        String QUERY = "SELECT deposit_id AS transaction_id, deposit_date AS date, deposit_amount AS amount, username AS username "
+                        + "FROM Deposit "
+                        + "WHERE username = 'olive' "
+                        + "UNION "
+                        + "SELECT withdraw_id AS transaction_id, withdraw_date AS date, withdraw_amount AS amount, username AS username "
+                        + "FROM Withdraw;"
+                        + "WHERE username = 'olive'";
+        return jdbcTemplate.query(QUERY, new MarketTransactionRowMapper());
+    };
 
 }
 
