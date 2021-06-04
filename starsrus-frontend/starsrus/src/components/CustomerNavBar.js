@@ -11,7 +11,7 @@ class CustomerNavBar extends React.Component {
               <Nav className="mr-auto">
                 <Link to={"/edit_customer/:username"} className="nav-link">Profile</Link>
                 <Link to={"myaccount"} className="nav-link">My Account</Link>
-                <Link to={"actor"} className="nav-link">My Stocks</Link>
+                <Link to={"mystocks"} className="nav-link">My Stocks</Link>
                 <Link to={"stockmarket"} className="nav-link">Stock Market</Link>
               </Nav>
             </Navbar>

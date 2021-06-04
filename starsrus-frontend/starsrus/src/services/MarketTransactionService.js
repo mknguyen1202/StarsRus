@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const REST_API_URL = "http://localhost:8080/api/myaccount";
 
-class MasketTransactionService {
+class MarketTransactionService {
     get(){
         return axios.get(REST_API_URL);
     }
@@ -26,4 +26,4 @@ class MasketTransactionService {
 
 }
 
-export default new MasketTransactionService();
+export default new MarketTransactionService();
