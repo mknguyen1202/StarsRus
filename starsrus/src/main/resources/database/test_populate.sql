@@ -242,3 +242,60 @@ GROUP BY symbol;
 
 
 
+<<<<<<< HEAD
+=======
+
+-- CREATE TABLE IF NOT EXISTS Withdraw (
+--     withdraw_id INTEGER AUTO INCREMENT,
+--     withdraw_date DATE,
+--     withdraw_amount REAL,
+--     username CHAR(30),
+--     PRIMARY KEY (withdraw_id),
+--     FOREIGN KEY (username) REFERENCES Customer(username)
+--         ON DELETE CASCADE
+--         ON UPDATE CASCADE
+-- );
+
+INSERT INTO Withdraw(withdraw_id, withdraw_date, withdraw_amount, username)
+VALUES(100, '01-01-2000', 101, 'olive');
+INSERT INTO Withdraw(withdraw_id, withdraw_date, withdraw_amount, username)
+VALUES(200, '02-02-2000', 201, 'frank');
+
+
+
+-- CREATE TABLE IF NOT EXISTS Deposit (
+--     deposit_id INTEGER AUTO INCREMENT,
+--     deposit_date DATE,
+--     deposit_amount REAL,
+--     username CHAR(30),
+--     PRIMARY KEY (deposit_id),
+--     FOREIGN KEY (username) REFERENCES Customer(username)
+--         ON DELETE CASCADE
+--         ON UPDATE CASCADE
+-- );
+
+INSERT INTO Deposit(deposit_id, deposit_date, deposit_amount, username)
+VALUES(100, '01-01-2000', 101, 'olive');
+INSERT INTO Deposit(deposit_id, deposit_date, deposit_amount, username)
+VALUES(200, '02-02-2000', 201, 'frank');
+
+
+SELECT *
+FROM Deposit,Withdraw
+WHERE Deposit.deposit_id == Withdraw.withdraw_id;
+
+
+SELECT deposit_id AS transaction_id, deposit_date AS date, deposit_amount AS amount, username AS username
+FROM Deposit
+WHERE username = 'olive'
+UNION
+SELECT withdraw_id AS transaction_id, withdraw_date AS date, withdraw_amount AS amount, username AS username
+FROM Withdraw
+WHERE username = 'olive';
+
+SELECT * 
+FROM Deposit D
+JOIN (SELECT * FROM Withdraw) AS W
+ON D.username = W.username
+WHERE D.username = "olive";
+>>>>>>> 6479daeae770998d99f56492d68a994b6a4b8548

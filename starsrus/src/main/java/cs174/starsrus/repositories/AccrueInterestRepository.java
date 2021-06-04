@@ -84,8 +84,5 @@ public class AccrueInterestRepository {
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { id },
 				new BeanPropertyRowMapper<AccrueInterest>(AccrueInterest.class));        
     };
-
-
-
 }
 

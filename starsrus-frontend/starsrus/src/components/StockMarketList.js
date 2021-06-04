@@ -65,7 +65,8 @@ class StockMarketList extends React.Component {
         .then(response => {
             if (response.data != 0) {
                 this.setState(this.initialState);
-                alert("StockMarketChangePrice Added Successfully!");
+                alert("StockMarketChangePrice Close Successfully!");
+                this.componentDidMount();
             } else {
                 alert("Cannot add stockmarket. symbol might already exist!");
             }
@@ -92,7 +93,8 @@ class StockMarketList extends React.Component {
         .then(response => {
             if (response.data != 0) {
                 this.setState(this.initialState);
-                alert("StockMarketChangePrice Added Successfully!");
+                alert("StockMarketChangePrice Open Successfully!");
+                this.componentDidMount();
             } else {
                 alert("Cannot add stockmarket. symbol might already exist!");
             }
@@ -163,11 +165,13 @@ class StockMarketList extends React.Component {
                                 <td> {stockmarket.closing_price === -1? "N/A Market is Open" : stockmarket.closing_price }</td>
                                 <td >{stockmarket.last_closing_price}</td>
                                 <td>
-                                    <ButtonGroup>
+                                    <ButtonGroup >
                                         
-                                        <Link to={"add_stockmarket/"+stockmarket.symbol} className="btn btn-warning">CHANGE PRICE</Link>
+                                        <Link to={this.state.stockmarkets.length && this.state.stockmarkets[0].closing_price === -1? 
+                                        "add_stockmarket/"+stockmarket.symbol +"/"+ stockmarket.stocktime : "#"} 
+                                        className="btn btn-warning"  >CHANGE PRICE</Link>
                                         {" "}
-                                        {/* <Button variant="danger" onClick={this.handleShow.bind(this, stockmarket.symbol)}>DELETE</Button> */}
+                                        
                                     </ButtonGroup>    
 
                                     {/* THIS IS FOR CONFIRMATION FORM*/}

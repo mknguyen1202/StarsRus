@@ -28,9 +28,11 @@ class StockMarketChangePrice extends Component {
 
     componentDidMount() {
         const symbol =  this.props.match.params.symbol;
+        const stocktime = this.props.match.params.stocktime;
+        console.log("MOUNTMOUNTMOUNT-----", stocktime);
         console.log(symbol);
         if (symbol) {
-            this.findStockMarketChangePriceBySymbol(symbol);
+            this.findStockMarketChangePriceBySymbol(symbol +"/"+ stocktime);
         }
     }
 
@@ -95,6 +97,7 @@ class StockMarketChangePrice extends Component {
             if (response.data != 0) {
                 this.setState(this.initialState);
                 alert("StockMarketChangePrice Added Successfully!");
+                this.props.history.push('/stockmarket');
             } else {
                 alert("Cannot add stockmarket. symbol might already exist!");
             }

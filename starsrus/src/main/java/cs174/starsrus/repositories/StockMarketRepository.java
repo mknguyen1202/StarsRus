@@ -99,15 +99,14 @@ public class StockMarketRepository {
     
     public int update(StockMarket stockmarket) {
         String QUERY = "UPDATE StockMarket SET"
-                                    + " stocktime = ?,"
                                     + " current_price = ?,"
                                     + " closing_price = ?,"
-                                    + " WHERE symbol = ?";
+                                    + " WHERE symbol = ? AND stocktime = ?";
         try {
-            jdbcTemplate.update(QUERY,  stockmarket.getStocktime(),
-                                        stockmarket.getCurrent_price(),
+            jdbcTemplate.update(QUERY,  stockmarket.getCurrent_price(),
                                         stockmarket.getClosing_price(),
-                                        stockmarket.getSymbol()); // WHERE
+                                        stockmarket.getSymbol(),
+                                        stockmarket.getStocktime()); // WHERE
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,10 +114,13 @@ public class StockMarketRepository {
         return 0;
     };
 
-    public int deleteBySymbol(String id) {
-        String QUERY = "DELETE FROM StockMarket WHERE symbol = ?";
+    public int deleteBySymbol(String sym, String time) {
+        String WHEREstatement = "symbol="+ "\'" + sym + "\'";
+        WHEREstatement += "stocktime=" + "\'" + time + "\'";
+
+        String QUERY = "DELETE FROM StockMarket WHERE" + WHEREstatement;
         try {
-            jdbcTemplate.update(QUERY, id);
+            jdbcTemplate.update(QUERY);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,9 +138,9 @@ public class StockMarketRepository {
                         +" GROUP BY symbol;";
         return jdbcTemplate.query(QUERY, new StockMarketRowMapper());
     };
-    public StockMarket findBySymbol(String symbol) {
-        String QUERY = "SELECT * FROM StockMarket WHERE symbol=? ORDER BY stocktime DESC LIMIT 1";
-		return jdbcTemplate.queryForObject(QUERY, new Object[] { symbol },
+    public StockMarket findBySymbol(String sym,String time) {
+        String QUERY = "SELECT * FROM StockMarket WHERE symbol=? AND stocktime=? ORDER BY stocktime DESC LIMIT 1";
+		return jdbcTemplate.queryForObject(QUERY, new Object[] { sym,time },
 				new BeanPropertyRowMapper<StockMarket>(StockMarket.class));        
     };
 

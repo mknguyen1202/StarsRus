@@ -50,16 +50,15 @@ public class StockAccountRepository {
     public int update(StockAccount stockaccount) {
         String QUERY = "UPDATE StockAccount SET"
                                     + " balance = ?,"
-                                    + " original_buying_price = ?,"
                                     + " account_date = ?,"
-                                    + " username = ?,"
-                                    + " WHERE symbol = ?";
+                                    + " WHERE symbol = ? AND username = ? AND original_buying_price = ?";
         try {
             jdbcTemplate.update(QUERY,  stockaccount.get_balance(),
-                                        stockaccount.get_original_buying_price(),
                                         stockaccount.get_account_date(),
+                                        stockaccount.get_symbol(),
                                         stockaccount.get_username(),
-                                        stockaccount.get_symbol()); // WHERE
+                                        stockaccount.get_original_buying_price()
+                                        ); // WHERE
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,8 +89,5 @@ public class StockAccountRepository {
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { sym,user,obp },
 				new BeanPropertyRowMapper<StockAccount>(StockAccount.class));    
     };
-
-
-
 }
 
