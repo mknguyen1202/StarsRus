@@ -13,8 +13,8 @@ class StockAccountRowMapper implements RowMapper<StockAccount> {
     public StockAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
         StockAccount stockaccount = new StockAccount();
         stockaccount.set_symbol(rs.getString("symbol"));
-        stockaccount.set_balance(rs.getFloat("balance"));
-        stockaccount.set_original_buying_price(rs.getString("original_buying_price"));
+        stockaccount.setBalance(rs.getDouble("balance"));
+        stockaccount.setOriginal_buying_price(rs.getDouble("original_buying_price"));
         stockaccount.set_account_date(rs.getString("account_date"));
         stockaccount.set_username(rs.getString("username"));
 

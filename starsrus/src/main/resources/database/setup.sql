@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS StockMarket(
     FOREIGN KEY (symbol) REFERENCES ActorStock(symbol)
         ON UPDATE CASCADE
         ON DELETE CASCADE
+    CHECK(current_price > 0)
 );
 
 

@@ -47,9 +47,24 @@ public class SellRepository {
             StockMarketRepository smrespo = new StockMarketRepository();
 
             StockMarket stock = smrespo.findBySymbol(sell.get_symbol());
-            List<StockAccount> salist = sarespo.findByKey(sym, user, obp)
+            StockAccount stockAccount = sarespo.findBySymbolUsername(sell.get_symbol(), sell.get_username());
 
-            double earning_from_sale = stock.getCurrent_price() * sell.getSell_shares();
+            // not enough shares return error
+            if (stockAccount.getBalance() < sell.getSell_shares()) {
+                return 0;
+            }
+            
+
+            double total_sell_in_dollars = stock.getCurrent_price() * sell.getSell_shares();    // money to get from sell
+            double original_worth = stockAccount.getOriginal_buying_price() * sell.getSell_shares();
+
+            double earning_from_sale = total_sell_in_dollars - original_worth;
+            sell.setEarnings_from_sale(earning_from_sale);
+
+            // substract shares from StockAccount
+            stockAccount.setBalance(stockAccount.getBalance() - sell.getSell_shares());
+            
+            
 
             String QUERY = "INSERT INTO Sell(sell_date, sell_shares, earnings_from_sale, username, symbol)"
                             + " VALUES(?,?,?,?,?)" ;
