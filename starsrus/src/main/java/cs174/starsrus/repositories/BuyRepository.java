@@ -17,6 +17,7 @@ import cs174.starsrus.Util;
 
 import cs174.starsrus.entities.Buy;
 import cs174.starsrus.entities.MarketAccount;
+import cs174.starsrus.entities.StockAccount;
 import cs174.starsrus.entities.StockMarket;
 import cs174.starsrus.entities.Withdraw;
 
@@ -49,37 +50,75 @@ public class BuyRepository {
     }
 
     /**
-     * This method is for buying shares
+     * This method add shares to StockAccount, withdraws money from MarketAccount, and 
+     * adds to deposit and sell history.
      * @param buy
      * @return 1: success, 0: error
      */
     public int create(Buy buy) {
         //TODO: automatically create and add $1000 to Market account
 
-        WithdrawRepository wdrespo = new WithdrawRepository();
-        Withdraw withdraw = new Withdraw();
-        MarketAccountRepository marespo = new MarketAccountRepository();
-        StockMarketRepository smrespo = new StockMarketRepository();
+
         
         try {
+            WithdrawRepository wdrespo = new WithdrawRepository();
+            MarketAccountRepository marespo = new MarketAccountRepository();
+            StockMarketRepository smrespo = new StockMarketRepository();
+            StockAccountRepository sarespo = new StockAccountRepository();
+
             // find the market account to take the money to buy
             MarketAccount ma = marespo.findByMarketAccountUsername(buy.get_username());
 
             // find the stock to get the current price on the market
             StockMarket sm = smrespo.findBySymbol(buy.get_symbol());
-            double total_money_needed = sm.getCurrent_price() * buy.getBuy_shares();
+
+            // find the stock account to insert the new bought stocks
+            StockAccount sa = sarespo.findBySymbolUsername(buy.get_symbol(), buy.get_username());
+
+
+            double total_money_needed = sm.getCurrent_price() * buy.getBuy_shares(); // in dollars
 
             // return error if not enough money
-            if (ma.get_balance() < total_money_needed) {
+            if (ma.getBalance() < total_money_needed) {
                 return 0;
             }
 
+            // STEP 1: Add shares to StockAccount
+            if (sa == null) {   // buy whole new stock (not in stock account yet)
+                sa = new StockAccount();
+                sa.setBalance(buy.getBuy_shares());
+                sa.setOriginal_buying_price(sm.getCurrent_price());
+                sa.set_account_date(Util.getCurrentDateFromDBAsString());
+                sa.set_username(buy.get_username());
+                sa.set_symbol(buy.get_symbol());
+                sarespo.create(sa); // add to StockAccount
+            } else { // Stock already in account, just need to add more shares
+                double updateBalance = sa.getBalance() + buy.getBuy_shares();
+
+                // equation for average buy price for tax purpose
+                double updateOriginalBuyPrice = (sa.getOriginal_buying_price() * sa.getBalance() + sm.getCurrent_price() * buy.getBuy_shares()) / (sa.getBalance() + buy.getBuy_shares());
+                
+                sa.setBalance(updateBalance);
+                sa.setOriginal_buying_price(updateOriginalBuyPrice);
+                sa.set_account_date(Util.getCurrentDateFromDBAsString());
+                sarespo.update(sa);
+            }
+
+            // STEP 2: withdraw money from MarketAccount
+            double updateBalance = ma.getBalance() - total_money_needed;
+            ma.setBalance(updateBalance);
+            ma.set_balance_date(Util.getCurrentDateFromDBAsString());
+            marespo.update(ma);
+
+
+            // STEP 3: add to withdraw history and buy history
+            // add to withdraw history
+            Withdraw withdraw = new Withdraw();            
             withdraw.set_withdraw_date(Util.getCurrentDateFromDBAsString());
             withdraw.setWithdraw_amount(total_money_needed);
             withdraw.set_username(buy.get_username());
-        
-            // first withdraw money from market account
             wdrespo.create(withdraw);
+    
 
             // then, add to buy history
             String QUERY = "INSERT INTO Buy(buy_date, buy_shares, username, symbol)"

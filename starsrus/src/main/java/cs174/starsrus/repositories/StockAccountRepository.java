@@ -51,7 +51,7 @@ public class StockAccountRepository {
         String QUERY = "UPDATE StockAccount SET"
                                     + " balance = ?,"
                                     + " account_date = ?,"
-                                    + " WHERE symbol = ? AND username = ? AND original_buying_price = ?";
+                                    + " WHERE symbol = ? AND username = ?";
         try {
             jdbcTemplate.update(QUERY,  stockaccount.getBalance(),
                                         stockaccount.get_account_date(),
@@ -69,7 +69,7 @@ public class StockAccountRepository {
     public int deleteByKey(String sym, String user, String obp) {
         String WHEREstatement = "symbol=" + "\'" + sym + "\'";
         WHEREstatement += "username=" + "\'" + user + "\'";
-        WHEREstatement += "original_buying_price=" + "\'" + obp + "\'";
+        // WHEREstatement += "original_buying_price=" + "\'" + obp + "\'";
         String QUERY = "DELETE FROM StockAccount WHERE " + WHEREstatement;         
         try{
             jdbcTemplate.update(QUERY);

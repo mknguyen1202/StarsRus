@@ -36,7 +36,7 @@ public class MarketAccountRepository {
         try {
             jdbcTemplate.update(QUERY, 
                                 marketaccount.get_market_account_id(),
-                                marketaccount.get_balance(),
+                                marketaccount.getBalance(),
                                 marketaccount.get_balance_date(),
                                 marketaccount.get_account_date(),
                                 marketaccount.get_username());
@@ -46,6 +46,12 @@ public class MarketAccountRepository {
         }
         return 0;
     };
+
+    /**
+     * This method could be used to deposit ore take out moneyy
+     * @param marketaccount
+     * @return
+     */
     
     public int update(MarketAccount marketaccount) {
         String QUERY = "UPDATE MarketAccount SET"
@@ -55,7 +61,7 @@ public class MarketAccountRepository {
                                     + " username = ?,"
                                     + " WHERE market_account_id = ?";
         try {
-            jdbcTemplate.update(QUERY,  marketaccount.get_balance(),
+            jdbcTemplate.update(QUERY,  marketaccount.getBalance(),
                                         marketaccount.get_balance_date(),
                                         marketaccount.get_account_date(),
                                         marketaccount.get_username(),

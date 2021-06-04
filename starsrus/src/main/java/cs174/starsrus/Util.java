@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.text.DateFormatter;
 
@@ -64,5 +65,22 @@ public class Util {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    /**
+     * 
+     * @param before: in "yyyy-MM-dd"
+     * @param after:  in "yyyy-MM-dd"
+     * @return
+     */
+    public static long getNumberOfDaysBetweenTwoDates(String before, String after) {
+
+        //Parsing the date
+        LocalDate dateBefore = LocalDate.parse(before);
+        LocalDate dateAfter = LocalDate.parse(after);
+            
+        //calculating number of days in between
+        long noOfDaysBetween = ChronoUnit.DAYS.between(dateBefore, dateAfter);
+        return noOfDaysBetween;
     }
 }
