@@ -19,6 +19,8 @@ import ActorMovieList from './components/ActorMovieList';
 import StockMarketList from './components/StockMarketList';
 
 import MyAccount from './components/MyAccount';
+import Withdraw from './components/Withdraw';
+
 
 function App() {
   return (
@@ -73,6 +75,7 @@ function App() {
 
 
             <Route path="/myaccount" exact component={MyAccount} />
+            <Route path="/withdraw" exact component={Withdraw} />
 
 
             <Route path="/actormovie/:symbol/:actor_name" exact component={ActorMovieList} />

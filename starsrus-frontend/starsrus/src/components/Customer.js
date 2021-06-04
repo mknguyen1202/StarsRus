@@ -9,7 +9,6 @@ class Customer extends Component {
         this.state = this.initialState;
         this.customerChange = this.customerChange.bind(this);
         this.add_customer_button = this.add_customer_button.bind(this);
-
     }
 
     // {"username":"alfred","password":"hi","name":"Alfred Hitchcock",
