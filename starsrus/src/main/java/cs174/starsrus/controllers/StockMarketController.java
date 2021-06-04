@@ -31,7 +31,7 @@ public class StockMarketController {
 
     @GetMapping("stockmarket/{symbol}/{stocktime}")
     public StockMarket getStockMarketBySymbol(@PathVariable(value="symbol") String symbol,@PathVariable(value="stocktime") String stocktime) {
-        return this.stockMarketRepository.findBySymbol(symbol,stocktime);
+        return this.stockMarketRepository.findByKey(symbol,stocktime);
     }
 
     @PostMapping("add_stockmarket")

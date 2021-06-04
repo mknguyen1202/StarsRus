@@ -138,9 +138,15 @@ public class StockMarketRepository {
                         +" GROUP BY symbol;";
         return jdbcTemplate.query(QUERY, new StockMarketRowMapper());
     };
-    public StockMarket findBySymbol(String sym,String time) {
+    public StockMarket findByKey(String sym,String time) {
         String QUERY = "SELECT * FROM StockMarket WHERE symbol=? AND stocktime=? ORDER BY stocktime DESC LIMIT 1";
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { sym,time },
+				new BeanPropertyRowMapper<StockMarket>(StockMarket.class));        
+    };
+
+    public StockMarket findBySymbol(String sym) {
+        String QUERY = "SELECT * FROM StockMarket WHERE symbol=? ORDER BY stocktime DESC LIMIT 1";
+		return jdbcTemplate.queryForObject(QUERY, new Object[] { sym },
 				new BeanPropertyRowMapper<StockMarket>(StockMarket.class));        
     };
 

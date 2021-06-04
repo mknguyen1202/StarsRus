@@ -27,6 +27,7 @@ public class StarsrusApplication implements CommandLineRunner{
 
 		// }
 		// System.out.println(customerRepository.findAll());
+		System.out.println("NUMBER OF DAYS: " + Util.numDaysInMonth(2021, 6));
 	}
 
 }

@@ -5,13 +5,33 @@ public class Sell {
 
     private int sell_id;
     private String sell_date;
-    private float sell_shares;
-    private float earnings_from_sale;
+    private double sell_shares;
+    private double earnings_from_sale;
     private String username;
     private String symbol;
 
 
      public Sell(){}
+
+
+    public double getEarnings_from_sale() {
+        return earnings_from_sale;
+    }
+
+
+    public void setEarnings_from_sale(double earnings_from_sale) {
+        this.earnings_from_sale = earnings_from_sale;
+    }
+
+
+    public double getSell_shares() {
+        return sell_shares;
+    }
+
+
+    public void setSell_shares(double sell_shares) {
+        this.sell_shares = sell_shares;
+    }
 
 
     public int get_sell_id() {
@@ -30,13 +50,7 @@ public class Sell {
 		this.sell_date = date;
 	}
 
-    public float get_sell_shares() {
-        return sell_shares;
-    }
 
-    public void set_sell_shares(float shares) {
-		this.sell_shares = shares;
-	}
 
     public String get_username() {
         return username;
@@ -54,11 +68,5 @@ public class Sell {
 		this.symbol = sym;
     }
 
-    public float get_earnings_from_sale() {
-        return earnings_from_sale;
-    }
-
-    public void set_earnings_from_sale(float earnings) {
-		this.earnings_from_sale = earnings;
-    }    
+  
 }

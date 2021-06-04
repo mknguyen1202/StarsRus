@@ -5,12 +5,22 @@ public class Buy {
 
     private int buy_id;
     private String buy_date;
-    private float buy_shares;
+    private double buy_shares;
     private String username;
     private String symbol;
 
 
      public Buy(){}
+
+
+    public double getBuy_shares() {
+        return buy_shares;
+    }
+
+
+    public void setBuy_shares(double buy_shares) {
+        this.buy_shares = buy_shares;
+    }
 
 
     public int get_buy_id() {
@@ -29,13 +39,7 @@ public class Buy {
 		this.buy_date = date;
 	}
 
-    public float get_buy_shares() {
-        return buy_shares;
-    }
 
-    public void set_buy_shares(float shares) {
-		this.buy_shares = shares;
-	}
 
 
     public String get_username() {

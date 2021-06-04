@@ -38,7 +38,7 @@ public class DepositRepository {
             jdbcTemplate.update(QUERY, 
                                 deposit.get_deposit_id(),
                                 deposit.get_deposit_date(),
-                                deposit.get_deposit_amount(),
+                                deposit.getDeposit_amount(),
                                 deposit.get_username());
             return 1;
         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class DepositRepository {
                                     + " WHERE deposit_id = ?";
         try {
             jdbcTemplate.update(QUERY,  deposit.get_deposit_date(),
-                                        deposit.get_deposit_amount(),
+                                        deposit.getDeposit_amount(),
                                         deposit.get_username(),
                                         deposit.get_deposit_id()); // WHERE
             return 1;

@@ -89,5 +89,12 @@ public class MarketAccountRepository {
 				new BeanPropertyRowMapper<MarketAccount>(MarketAccount.class));        
     };
 
+    public MarketAccount findByMarketAccountUsername(String username) {
+        String QUERY = "SELECT * FROM MarketAccount WHERE username=?";
+		return jdbcTemplate.queryForObject(QUERY, new Object[] { username },
+				new BeanPropertyRowMapper<MarketAccount>(MarketAccount.class));        
+    };
+
+
 }
 

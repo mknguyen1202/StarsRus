@@ -14,7 +14,7 @@ class BuyRowMapper implements RowMapper<Buy> {
         Buy buy = new Buy();
         buy.set_buy_id(rs.getInt("buy_id"));
         buy.set_buy_date(rs.getString("buy_date"));
-        buy.set_buy_shares(rs.getFloat("buy_shares"));
+        buy.setBuy_shares(rs.getDouble("buy_shares"));
         buy.set_username(rs.getString("username"));
         buy.set_symbol(rs.getString("symbol"));
 
