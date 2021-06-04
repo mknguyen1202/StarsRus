@@ -31,13 +31,12 @@ public class WithdrawRepository {
 
     public int create(Withdraw withdraw) {
         //TODO: automatically create and add $1000 to Market account
-        String QUERY = "INSERT INTO Withdraw"
-                       + " VALUES(?,?,?,?)" ;
+        String QUERY = "INSERT INTO Withdraw(withdraw_date, withdraw_amount, username)"
+                       + " VALUES(?,?,?)" ;
         try {
             jdbcTemplate.update(QUERY, 
-                                withdraw.get_withdraw_id(),
                                 withdraw.get_withdraw_date(),
-                                withdraw.get_withdraw_amount(),
+                                withdraw.getWithdraw_amount(),
                                 withdraw.get_username());
             return 1;
         } catch (Exception e) {
@@ -54,7 +53,7 @@ public class WithdrawRepository {
                                     + " WHERE withdraw_id = ?";
         try {
             jdbcTemplate.update(QUERY,  withdraw.get_withdraw_date(),
-                                        withdraw.get_withdraw_amount(),
+                                        withdraw.getWithdraw_amount(),
                                         withdraw.get_username(),
                                         withdraw.get_withdraw_id()); // WHERE
             return 1;

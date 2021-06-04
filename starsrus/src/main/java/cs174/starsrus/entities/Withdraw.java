@@ -5,11 +5,21 @@ public class Withdraw {
 
     private int withdraw_id;
     private String withdraw_date;
-    private float withdraw_amount;
+    private double withdraw_amount;
     private String username;
 
 
      public Withdraw(){}
+
+
+    public double getWithdraw_amount() {
+        return withdraw_amount;
+    }
+
+
+    public void setWithdraw_amount(double withdraw_amount) {
+        this.withdraw_amount = withdraw_amount;
+    }
 
 
     public int get_withdraw_id() {
@@ -28,13 +38,7 @@ public class Withdraw {
 		this.withdraw_date = date;
 	}
 
-    public float get_withdraw_amount() {
-        return withdraw_amount;
-    }
 
-    public void set_withdraw_amount(float amount) {
-		this.withdraw_amount = amount;
-	}
 
     public String get_username() {
         return username;

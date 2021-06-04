@@ -241,7 +241,81 @@ GROUP BY symbol;
 
 
 
+-- TAXID,#OFSHARES(3/16/2013),ACTORID(STOCKID)
+-- 1022,100,SKB             1
+-- 3045,500,SMD
+-- 3045,100,STC
+-- 2034,250,STC
+-- 4093,100,SKB
 
+-- 4093,500,SMD             6
+-- 4093,50,STC
+-- 1234,1000,SMD
+-- 8956,100,SKB
+-- 2341,300,SMD
+
+-- 0456,500,SKB             11
+-- 0456,100,STC
+-- 0456,200,SMD
+-- 3455,1000,SKB
+-- 1123,100,SKB             
+
+-- 1123,100,SMD             16
+-- 1123,100,STC
+-- 3306,100,SKB
+-- 3306,200,STC
+-- 3306,100,SMD             20
+
+-- ORIGINAL PRICE:
+-- SMD: 200
+-- STC: 50
+-- SKB: 110
+
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SKB", 100, 110, DATE("now"), 'alfred');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SMD", 500, 200, DATE("now"), 'billy');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("STC", 100, 50, DATE("now"), 'billy');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("STC", 250, 50, DATE("now"), 'cindy');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SKB", 100, 110, DATE("now"), 'david');
+
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SMD", 500, 200, DATE("now"), 'david');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("STC", 50, 50, DATE("now"), 'david');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SMD", 1000, 200, DATE("now"), 'sailor');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SKB", 100, 110, DATE("now"), 'brush');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SMD", 300, 200, DATE("now"), 'ivan');
+
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SKB", 500, 110, DATE("now"), 'joe');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("STC", 100, 50, DATE("now"), 'joe');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SMD", 200, 200, DATE("now"), 'joe');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SKB", 1000, 110, DATE("now"), 'magic');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SKB", 100, 110, DATE("now"), 'olive');
+
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SMD", 100, 200, DATE("now"), 'olive');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("STC", 100, 50, DATE("now"), 'olive');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SKB", 100, 110, DATE("now"), 'frank');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("STC", 200, 50, DATE("now"), 'frank');
+INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
+VALUES("SMD", 100, 200, DATE("now"), 'frank');
+
+-- ----------------------------------------------------------------------  TEST QUERIES
 
 -- CREATE TABLE IF NOT EXISTS Withdraw (
 --     withdraw_id INTEGER AUTO INCREMENT,

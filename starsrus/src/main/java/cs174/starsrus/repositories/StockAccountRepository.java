@@ -89,5 +89,10 @@ public class StockAccountRepository {
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { sym,user,obp },
 				new BeanPropertyRowMapper<StockAccount>(StockAccount.class));    
     };
+
+    public List<StockAccount> findBySymbolUsername(String sym, String user, String obp) {
+        String QUERY = "SELECT * FROM StockAccount WHERE symbol=? AND username=?";
+		return jdbcTemplate.query(QUERY, new Object[]{sym, user}, new StockAccountRowMapper());   
+    };
 }
 

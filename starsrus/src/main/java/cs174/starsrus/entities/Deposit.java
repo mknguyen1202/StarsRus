@@ -5,11 +5,21 @@ public class Deposit {
 
     private int deposit_id;
     private String deposit_date;
-    private float deposit_amount;
+    private double deposit_amount;
     private String username;
 
 
      public Deposit(){}
+
+
+    public double getDeposit_amount() {
+        return deposit_amount;
+    }
+
+
+    public void setDeposit_amount(double deposit_amount) {
+        this.deposit_amount = deposit_amount;
+    }
 
 
     public int get_deposit_id() {
@@ -28,13 +38,7 @@ public class Deposit {
 		this.deposit_date = date;
 	}
 
-    public float get_deposit_amount() {
-        return deposit_amount;
-    }
 
-    public void set_deposit_amount(float amount) {
-		this.deposit_amount = amount;
-	}
 
     public String get_username() {
         return username;

@@ -14,7 +14,7 @@ class DepositRowMapper implements RowMapper<Deposit> {
         Deposit deposit = new Deposit();
         deposit.set_deposit_id(rs.getInt("deposit_id"));
         deposit.set_deposit_date(rs.getString("deposit_date"));
-        deposit.set_deposit_amount(rs.getFloat("deposit_amount"));
+        deposit.setDeposit_amount(rs.getDouble("deposit_amount"));
         deposit.set_username(rs.getString("username"));
         return deposit;
     }

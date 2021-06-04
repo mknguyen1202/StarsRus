@@ -15,7 +15,7 @@ class MarketTransactionRowMapper implements RowMapper<Deposit> {
         System.out.println("IN ROW MAPPER: ----------------" + rs.getInt("transaction_id"));
         deposit.set_deposit_id(rs.getInt("transaction_id"));
         deposit.set_deposit_date(rs.getString("date"));
-        deposit.set_deposit_amount(rs.getFloat("amount"));
+        deposit.setDeposit_amount(rs.getDouble("amount"));
         deposit.set_username(rs.getString("username"));
         return deposit;
     }

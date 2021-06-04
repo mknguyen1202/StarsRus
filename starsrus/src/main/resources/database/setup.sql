@@ -35,16 +35,17 @@ CREATE TABLE IF NOT EXISTS MarketAccount (
     PRIMARY KEY (market_account_id),
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    CHECK (balance >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS StockAccount (
     symbol CHAR(3),
     balance REAL NOT NULL,
-    original_buying_price CHAR(20),
+    original_buying_price REAL NOT NULL,
     account_date DATE,
     username CHAR(30),
-    PRIMARY KEY (symbol, username, original_buying_price),
+    PRIMARY KEY (symbol, username),
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
