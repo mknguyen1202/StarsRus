@@ -10,7 +10,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import cs174.starsrus.Util;
 import cs174.starsrus.entities.Deposit;
+import cs174.starsrus.entities.MarketAccount;
 
 // import org.springframework.data.repository.CrudRepository;
 
@@ -34,7 +36,7 @@ public class SellRepository {
 
     /**
      * This method subtracts shares from StockAccount, deposits money into MarketAccount, and
-     * adds to sell history.
+     * adds to deposit and sell history.
      * @param sell
      * @return
      */
@@ -46,8 +48,16 @@ public class SellRepository {
             StockAccountRepository sarespo = new StockAccountRepository();
             StockMarketRepository smrespo = new StockMarketRepository();
 
+            // get customer's market account, the stock account, and the stock from the stock market
+            MarketAccount marketAccount = marespo.findByMarketAccountUsername(sell.get_username());
             StockMarket stock = smrespo.findBySymbol(sell.get_symbol());
             StockAccount stockAccount = sarespo.findBySymbolUsername(sell.get_symbol(), sell.get_username());
+
+            // stock does not exist, just extra check, will be constrained on frontend
+            if (stockAccount == null) {
+                return 0;
+            }
+
 
             // not enough shares return error
             if (stockAccount.getBalance() < sell.getSell_shares()) {
@@ -60,12 +70,24 @@ public class SellRepository {
 
             double earning_from_sale = total_sell_in_dollars - original_worth;
             sell.setEarnings_from_sale(earning_from_sale);
+            sell.set_sell_date(Util.getCurrentDateFromDBAsString());    // current date (in the system) for sell
 
             // substract shares from StockAccount
             stockAccount.setBalance(stockAccount.getBalance() - sell.getSell_shares());
-            
-            
 
+            // deposit the money earned into MarketAccount
+            double updatedBalance = marketAccount.getBalance() + total_sell_in_dollars;
+            marketAccount.setBalance(updatedBalance);
+            marespo.update(marketAccount);
+
+            // add to deposit and to sell history
+            // to deposit history
+            deposit.setDeposit_amount(total_sell_in_dollars);
+            deposit.set_deposit_date(Util.getCurrentDateFromDBAsString());
+            deposit.set_username(sell.get_username());
+            derespo.create(deposit);    
+            
+            // to sell history
             String QUERY = "INSERT INTO Sell(sell_date, sell_shares, earnings_from_sale, username, symbol)"
                             + " VALUES(?,?,?,?,?)" ;
             jdbcTemplate.update(QUERY, 

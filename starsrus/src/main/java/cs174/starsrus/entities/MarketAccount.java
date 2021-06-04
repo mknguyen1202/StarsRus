@@ -4,7 +4,7 @@ package cs174.starsrus.entities;
 public class MarketAccount {
 
     private int market_account_id;
-    private float balance;
+    private double balance;
     private String balance_date;
     private String account_date;
     private String username;
@@ -15,17 +15,18 @@ public class MarketAccount {
         return market_account_id;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public void set_market_account_id(int id) {
 		this.market_account_id = id;
 	}
 
-    public float get_balance() {
-        return balance;
-    }
-
-    public void set_balance(float bal) {
-		this.balance = bal;
-	}
 
 
     public String get_balance_date() {
