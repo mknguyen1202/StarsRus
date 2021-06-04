@@ -31,12 +31,23 @@ public class StockMarketController {
 
     @GetMapping("stockmarket/{symbol}")
     public StockMarket getStockMarketBySymbol(@PathVariable(value="symbol") String symbol) {
+        System.out.println("STOCK MARKET --------------------------" + symbol);
         return this.stockMarketRepository.findBySymbol(symbol);
     }
 
     @PostMapping("add_stockmarket")
     public int createStock(@RequestBody StockMarket actorStock) {
         return this.stockMarketRepository.create(actorStock);
+    }
+
+    @PostMapping("open_stockmarket")
+    public int openMarket(@RequestBody StockMarket actorStock) {
+        return this.stockMarketRepository.createOpen(actorStock);
+    }
+
+    @PostMapping("close_stockmarket")
+    public int closeMarket(@RequestBody StockMarket actorStock) {
+        return this.stockMarketRepository.createClose(actorStock);
     }
 
     @DeleteMapping("stockmarket/{symbol}")

@@ -6,14 +6,19 @@ import {Link} from "react-router-dom";
 class StockMarketList extends React.Component {
     constructor (props) {
         super(props)
-        this.state = {
-            stockmarkets:[],
-            show: false,
-            symbol: "",
-        };
+        this.state = this.initialState;
         this.handleClose = this.handleClose.bind(this.state);
         this.handleShow = this.handleShow.bind(this);
+        this.open_market = this.open_market.bind(this);
+        this.close_market = this.close_market.bind(this);
     }
+
+    initialState = {
+        stockmarkets:[],
+        show: false,
+        symbol: "",
+    }
+
 
     componentDidMount() {
         StockMarketService.get().then((response) => {
@@ -23,7 +28,6 @@ class StockMarketList extends React.Component {
     }
 
     delete = (symbol) => {
-            console.log(symbol);
             StockMarketService.delete(symbol)
             .then(response => {
                 
@@ -41,6 +45,60 @@ class StockMarketList extends React.Component {
                 console.log(e);
             });
         
+    }
+
+
+    close_market(event) {
+        event.preventDefault();
+        console.log(this.state);
+
+        const newstockmarket = {
+            symbol: this.state.stockmarkets.symbol,
+            current_price: this.state.stockmarkets.current_price,
+            closing_price: this.state.stockmarkets.current_price,
+            stocktime: null
+        };
+
+        console.log("============ IN STOCKMARKET ADD", newstockmarket)
+
+        StockMarketService.close_market(newstockmarket)
+        .then(response => {
+            if (response.data != 0) {
+                this.setState(this.initialState);
+                alert("StockMarketChangePrice Added Successfully!");
+            } else {
+                alert("Cannot add stockmarket. symbol might already exist!");
+            }
+        }).catch (e => {
+            console.log(e);
+        });
+    }
+
+    open_market(event) {
+        event.preventDefault();
+
+
+
+        const newstockmarket = {
+            symbol: this.state.symbol,
+            current_price: this.state.current_price,
+            closing_price: this.state.current_price,
+            stocktime: null
+        };
+
+        console.log("============ IN STOCKMARKET ADD", newstockmarket)
+
+        StockMarketService.open_market(newstockmarket)
+        .then(response => {
+            if (response.data != 0) {
+                this.setState(this.initialState);
+                alert("StockMarketChangePrice Added Successfully!");
+            } else {
+                alert("Cannot add stockmarket. symbol might already exist!");
+            }
+        }).catch (e => {
+            console.log(e);
+        });
     }
 
     handleShow = (deletesymbol) => { 
@@ -65,15 +123,15 @@ class StockMarketList extends React.Component {
             <div>
                 <h1 className="text-center"> Overall Market Stock List </h1>
                 <p>
-                <Link to="/add_stockmarket" className="btn btn-success">Open Market</Link>
+                <Button to="/add_stockmarket" variant="success" onClick={this.open_market}>Open Market</Button>
                 
                 {" "}
 
-                <Link to="/add_stockmarket" className="btn btn-warning">Close Market</Link>
+                <Button to="/add_stockmarket" variant="danger" onClick={this.close_market}>Close Market</Button>
 
                 </p>
                 <p>
-                    {/* {this.state.stockmarkets[0].closing_price? "The Market is Closed" : "The Market is Open."} */}
+                    {this.state.stockmarkets.length && this.state.stockmarkets[0].closing_price === -1? "The Market is Open" : "The Market is Closed."}
                 </p>
                 <table className="table table-striped text-center" >
                     <thead>
@@ -83,7 +141,6 @@ class StockMarketList extends React.Component {
                             <td>Current Price</td>
                             <td>Closing Price</td>
                             <td>Last Closing Price</td>
-                            
                             <td>Actions</td>
                         </tr>
                     </thead>
@@ -95,7 +152,7 @@ class StockMarketList extends React.Component {
                         this.state.stockmarkets.map(
                             stockmarket => 
                             <tr key = {stockmarket.symbol}>
-                                <td><Link   to={"actormovie/"+ stockmarket.symbol +"/"+ stockmarket.actor_name} 
+                                <td><Link   
                                             className="btn btn-info text-white"
                                             size="lg">
                                     {stockmarket.symbol}
@@ -103,14 +160,14 @@ class StockMarketList extends React.Component {
                                 </td>
                                 <td >{stockmarket.stocktime}</td>
                                 <td >{stockmarket.current_price}</td>
-                                <td> {}</td>
-                                <td >{stockmarket.closing_price}</td>
+                                <td> {stockmarket.closing_price === -1? "N/A Market is Open" : stockmarket.closing_price }</td>
+                                <td >{stockmarket.last_closing_price}</td>
                                 <td>
                                     <ButtonGroup>
                                         
-                                        <Link to={"edit_stockmarket/"+stockmarket.symbol} className="btn btn-primary">EDIT</Link>
+                                        <Link to={"add_stockmarket/"+stockmarket.symbol} className="btn btn-warning">CHANGE PRICE</Link>
                                         {" "}
-                                        <Button variant="danger" onClick={this.handleShow.bind(this, stockmarket.symbol)}>DELETE</Button>
+                                        {/* <Button variant="danger" onClick={this.handleShow.bind(this, stockmarket.symbol)}>DELETE</Button> */}
                                     </ButtonGroup>    
 
                                     {/* THIS IS FOR CONFIRMATION FORM*/}

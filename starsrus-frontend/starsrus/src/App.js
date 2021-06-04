@@ -17,6 +17,7 @@ import ActorStock from './components/ActorStock';
 import ActorStockList from './components/ActorStockList';
 import ActorMovieList from './components/ActorMovieList';
 import StockMarketList from './components/StockMarketList';
+import StockMarketChangePrice from './components/StockMarketChangePrice';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
 
 
             <Route path="/stockmarket" exact component={StockMarketList} />
+            <Route path="/add_stockmarket/:symbol" exact component={StockMarketChangePrice} />
 
         </Switch>
         </Container>
