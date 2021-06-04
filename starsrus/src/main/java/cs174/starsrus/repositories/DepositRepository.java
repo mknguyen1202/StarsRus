@@ -10,9 +10,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import cs174.starsrus.Util;
+
 // import org.springframework.data.repository.CrudRepository;
 
 import cs174.starsrus.entities.Deposit;
+import cs174.starsrus.entities.MarketAccount;
 import cs174.starsrus.entities.Withdraw;
 
 
@@ -29,7 +32,42 @@ public class DepositRepository {
         return jdbcTemplate.queryForObject(QUERY, Long.class);
     };
 
+    /**
+     * This method lets customer add money to their MarketAccount
+     * @param deposit
+     * @return
+     */
+    public int deposit(Deposit deposit) {
+        try {
+            // get marketaccount first
+            MarketAccountRepository marepos = new MarketAccountRepository();
 
+            MarketAccount ma = marepos.findByMarketAccountUsername(deposit.get_username());
+            
+            // if market account not exist, create new account
+            if (ma == null) {
+                return 0;
+            }
+
+            // Add money to market account;
+            double updateBalance = ma.getBalance() + deposit.getDeposit_amount();
+            ma.setBalance(updateBalance);
+            ma.set_balance_date(Util.getCurrentDateFromDBAsString());
+            marepos.update(ma); // update/add money to market accout
+
+            // Add to deposit history
+            return create(deposit);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * This method is for adding to deposit history
+     * @param deposit
+     * @return
+     */
     public int create(Deposit deposit) {
         //TODO: automatically create and add $1000 to Market account
         String QUERY = "INSERT INTO Deposit"

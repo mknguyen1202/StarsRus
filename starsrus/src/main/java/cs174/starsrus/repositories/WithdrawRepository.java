@@ -28,6 +28,24 @@ public class WithdrawRepository {
         return jdbcTemplate.queryForObject(QUERY, Long.class);
     };
 
+    public int withdraw(Withdraw withdraw) {
+        try {
+            // Withdraw money from MarketAccount      
+            
+            // if not enough money, return error
+
+            // Add money to market account;
+
+            // Add to withdraw history
+            return create(withdraw);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     public int create(Withdraw withdraw) {
         //TODO: automatically create and add $1000 to Market account

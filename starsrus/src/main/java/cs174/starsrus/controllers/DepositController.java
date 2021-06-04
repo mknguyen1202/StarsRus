@@ -38,7 +38,7 @@ public class DepositController {
 
     @PostMapping("add_deposit")
     public int createDeposit(@RequestBody Deposit deposit) {
-        return this.depositRepository.create(deposit);
+        return this.depositRepository.deposit(deposit);
     }
 
     @DeleteMapping("deposit/{deposit_id}")
