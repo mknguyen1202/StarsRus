@@ -10,9 +10,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import cs174.starsrus.entities.MarketAccount;
+
 // import org.springframework.data.repository.CrudRepository;
 
 import cs174.starsrus.entities.Withdraw;
+import cs174.starsrus.Util;
 
 
 
@@ -31,9 +34,23 @@ public class WithdrawRepository {
     public int withdraw(Withdraw withdraw) {
         try {
             // Withdraw money from MarketAccount      
-            
-            // if not enough money, return error
+            MarketAccountRepository marepos = new MarketAccountRepository();
 
+            MarketAccount ma = marepos.findByMarketAccountUsername(withdraw.get_username());
+            
+            if (ma == null) {
+                return 0;
+            }
+
+            // if not enough money, return error
+            if (withdraw.getWithdraw_amount() > ma.getBalance()){
+                return 0;
+            }else{
+                double updateBalance = ma.getBalance() - withdraw.getWithdraw_amount();
+                ma.setBalance(updateBalance);
+                ma.set_balance_date(Util.getCurrentDateFromDBAsString());
+                marepos.update(ma); // update/add money to market accout
+            }
             // Add money to market account;
 
             // Add to withdraw history

@@ -38,7 +38,7 @@ public class WithdrawController {
 
     @PostMapping("add_withdraw")
     public int createWithdraw(@RequestBody Withdraw withdraw) {
-        return this.withdrawRepository.create(withdraw);
+        return this.withdrawRepository.withdraw(withdraw);
     }
 
     @DeleteMapping("withdraw/{withdraw_id}")
