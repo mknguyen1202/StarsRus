@@ -185,18 +185,43 @@ VALUES(DATETIME('now'), 225, 185, 'SKB');
 INSERT INTO StockMarket
 VALUES(DATETIME('now'), 105, 115, 'STC');
 
+INSERT INTO StockMarket(stocktime, current_price, closing_price, symbol)
+VALUES(DATETIME('now'), 99, -1, 'STC');
+
 
 SELECT DISTINCT * FROM StockMarket
 ORDER BY stocktime DESC;
 
-SELECT DISTINCT S1.stocktime, S1.current_price, S1.closing_price, S1.symbol
-FROM StockMarket S1, StockMarket S2
-WHERE S1.symbol != S2.symbol
-ORDER BY S1.stocktime DESC;
 
+SELECT * FROM (SELECT * FROM StockMarket ORDER BY stocktime DESC)
+LEFT JOIN (SELECT symbol AS symbol2, closing_price AS last_closing_price
+                FROM (SELECT *  FROM StockMarket ORDER BY stocktime DESC)
+                WHERE closing_price != -1 
+                GROUP BY symbol2 )
+ON symbol = symbol2
+GROUP BY symbol;
 
 SELECT * FROM (SELECT * FROM StockMarket ORDER BY stocktime DESC)
 GROUP BY symbol;
+-- stocktime            current_price  closing_price  symbol    
+-- -------------------  -------------  -------------  ----------
+-- 2021-06-02 21:00:05  50.0           60.0           SMD       
+-- 2021-06-02 21:00:05  220.0          180.0          SKB       
+-- 2021-06-02 21:00:05  100.0          110.0          STC       
+-- 2021-06-03 21:00:12  55.0           65.0           SMD       
+-- 2021-06-03 21:00:12  225.0          185.0          SKB       
+-- 2021-06-03 21:00:21  105.0          115.0          STC       
+-- 2021-06-03 21:50:46  99.0           -1.0           STC  
+
+SELECT * FROM (SELECT * FROM StockMarket ORDER BY stocktime DESC)
+NATURAL JOIN (SELECT symbol, closing_price AS last_closing_price 
+                FROM StockMarket 
+                WHERE closing_price = -1 
+                GROUP BY symbol
+                ORDER BY stocktime DESC 
+            )
+GROUP BY symbol;
+
 --------------------------------------------------------- STOCK ACCOUNT
 
 -- CREATE TABLE IF NOT EXISTS StockAccount (
@@ -217,6 +242,8 @@ GROUP BY symbol;
 
 
 
+<<<<<<< HEAD
+=======
 
 -- CREATE TABLE IF NOT EXISTS Withdraw (
 --     withdraw_id INTEGER AUTO INCREMENT,
@@ -271,3 +298,4 @@ FROM Deposit D
 JOIN (SELECT * FROM Withdraw) AS W
 ON D.username = W.username
 WHERE D.username = "olive";
+>>>>>>> 6479daeae770998d99f56492d68a994b6a4b8548

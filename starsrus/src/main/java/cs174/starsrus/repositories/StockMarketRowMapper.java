@@ -15,6 +15,7 @@ class StockMarketRowMapper implements RowMapper<StockMarket> {
         stockmarket.setStocktime(rs.getString("stocktime"));
         stockmarket.setCurrent_price(rs.getDouble("current_price"));
         stockmarket.setClosing_price(rs.getDouble("closing_price"));
+        stockmarket.setLast_closing_price(rs.getDouble("last_closing_price"));
         stockmarket.setSymbol(rs.getString("symbol"));
 
         return stockmarket;

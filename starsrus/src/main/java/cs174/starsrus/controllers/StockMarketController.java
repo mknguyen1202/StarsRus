@@ -29,7 +29,7 @@ public class StockMarketController {
         return this.stockMarketRepository.findAll();
     }
 
-    @GetMapping("stockmarket/{symbol,stocktime}")
+    @GetMapping("stockmarket/{symbol}/{stocktime}")
     public StockMarket getStockMarketBySymbol(@PathVariable(value="symbol") String symbol,@PathVariable(value="stocktime") String stocktime) {
         return this.stockMarketRepository.findBySymbol(symbol,stocktime);
     }
@@ -37,6 +37,16 @@ public class StockMarketController {
     @PostMapping("add_stockmarket")
     public int createStock(@RequestBody StockMarket actorStock) {
         return this.stockMarketRepository.create(actorStock);
+    }
+
+    @PostMapping("open_stockmarket")
+    public int openMarket(@RequestBody StockMarket actorStock) {
+        return this.stockMarketRepository.createOpen(actorStock);
+    }
+
+    @PostMapping("close_stockmarket")
+    public int closeMarket(@RequestBody StockMarket actorStock) {
+        return this.stockMarketRepository.createClose(actorStock);
     }
 
     // @DeleteMapping("stockmarket/{symbol}/{stocktime}")
