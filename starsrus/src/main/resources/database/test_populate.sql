@@ -315,6 +315,24 @@ VALUES("STC", 200, 50, DATE("now"), 'frank');
 INSERT INTO StockAccount(symbol, balance, original_buying_price, account_date, username)
 VALUES("SMD", 100, 200, DATE("now"), 'frank');
 
+
+
+-- ALFRED
+-- SYMBOL       ORIGINAL-PRICE          SHARES
+-- SMD          50                      100
+-- SMD          70                      150
+-- SMD          62                      250         <--- CALCULATED PRICE
+
+-- SMD          60                      100 
+
+-- AVERAGE ORIGINAL PRICE (50 * 100 + 70 * 150) / 250 = 62
+-- (62 * 250 + 60 * 100) / (250 + 100) = 61.4
+
+-- 61.4 * 350 =?= 50*100 + 70*150 + 60*100
+-- 21500      =?= 
+
+
+
 -- ----------------------------------------------------------------------  TEST QUERIES
 
 -- CREATE TABLE IF NOT EXISTS Withdraw (

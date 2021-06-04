@@ -36,8 +36,8 @@ public class StockAccountRepository {
         try {
             jdbcTemplate.update(QUERY, 
                                 stockaccount.get_symbol(),
-                                stockaccount.get_balance(),
-                                stockaccount.get_original_buying_price(),
+                                stockaccount.getBalance(),
+                                stockaccount.getOriginal_buying_price(),
                                 stockaccount.get_account_date(),
                                 stockaccount.get_username());
             return 1;
@@ -53,11 +53,11 @@ public class StockAccountRepository {
                                     + " account_date = ?,"
                                     + " WHERE symbol = ? AND username = ? AND original_buying_price = ?";
         try {
-            jdbcTemplate.update(QUERY,  stockaccount.get_balance(),
+            jdbcTemplate.update(QUERY,  stockaccount.getBalance(),
                                         stockaccount.get_account_date(),
                                         stockaccount.get_symbol(),
                                         stockaccount.get_username(),
-                                        stockaccount.get_original_buying_price()
+                                        stockaccount.getOriginal_buying_price()
                                         ); // WHERE
             return 1;
         } catch (Exception e) {
@@ -90,9 +90,10 @@ public class StockAccountRepository {
 				new BeanPropertyRowMapper<StockAccount>(StockAccount.class));    
     };
 
-    public List<StockAccount> findBySymbolUsername(String sym, String user, String obp) {
+    public StockAccount findBySymbolUsername(String sym, String user) {
         String QUERY = "SELECT * FROM StockAccount WHERE symbol=? AND username=?";
-		return jdbcTemplate.query(QUERY, new Object[]{sym, user}, new StockAccountRowMapper());   
+		return jdbcTemplate.queryForObject(QUERY, new Object[] { sym,user },
+        new BeanPropertyRowMapper<StockAccount>(StockAccount.class)); 
     };
 }
 
