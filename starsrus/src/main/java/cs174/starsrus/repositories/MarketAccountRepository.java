@@ -31,11 +31,16 @@ public class MarketAccountRepository {
 
     public int create(MarketAccount marketaccount) {
         //TODO: automatically create and add $1000 to Market account
-        String QUERY = "INSERT INTO MarketAccount"
-                       + " VALUES(?,?,?,?,?)" ;
+        // market_account_id INTEGER NOT NULL,
+        // balance REAL NOT NULL,
+        // balance_date DATE,
+        // account_date DATE,
+        // username CHAR(30),
+        String QUERY = "INSERT INTO MarketAccount(balance, balance_date, account_date, username)"
+                       + " VALUES(?,?,?,?)" ;
         try {
             jdbcTemplate.update(QUERY, 
-                                marketaccount.get_market_account_id(),
+                                // marketaccount.get_market_account_id(),
                                 marketaccount.getBalance(),
                                 marketaccount.get_balance_date(),
                                 marketaccount.get_account_date(),

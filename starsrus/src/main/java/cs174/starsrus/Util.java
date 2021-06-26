@@ -8,9 +8,12 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+
 import javax.swing.text.DateFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import javax.sql.DataSource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,15 +22,27 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class Util {
 
-    
+    public static final String DRIVER = "com.sqlite.jdbc.Driver";
+    public static final String JDBC_URL = "jdbc:sqlite:src/main/resources/database/chinook.db";
+    // public static final String USERNAME = "root";
+    // public static final String PASSWORD = "";
 
-    @Autowired
+    public static DataSource source;
     public static JdbcTemplate jdbcTemplate;
     
     public static int numDaysInMonth(int year, int month) {
         YearMonth yearMonthObject = YearMonth.of(year, month);
         return yearMonthObject.lengthOfMonth();
     };
+
+    private static DataSource getDataSource() {       
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        // dataSource.setDriverClassName(DRIVER);
+        dataSource.setUrl(JDBC_URL);
+        // dataSource.setUsername(USERNAME);
+        // dataSource.setPassword(PASSWORD);
+        return dataSource;
+    }
 
     public static String getCurrentDateFromDBAsString() throws SQLException
     {
@@ -82,5 +97,17 @@ public class Util {
         //calculating number of days in between
         long noOfDaysBetween = ChronoUnit.DAYS.between(dateBefore, dateAfter);
         return noOfDaysBetween;
+    }
+
+    public static int addDefaultSystemDate(String defaultDate) {
+        try {
+            String QUERY = "INSERT INTO TodaysDate VALUES(?)";
+            jdbcTemplate.update(QUERY, defaultDate);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

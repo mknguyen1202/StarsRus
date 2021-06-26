@@ -1,6 +1,7 @@
 package cs174.starsrus.repositories;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.tree.RowMapper;
@@ -10,9 +11,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import cs174.starsrus.Util;
+
 // import org.springframework.data.repository.CrudRepository;
 
 import cs174.starsrus.entities.Customer;
+import cs174.starsrus.entities.MarketAccount;
 
 
 
@@ -20,7 +24,10 @@ import cs174.starsrus.entities.Customer;
 public class CustomerRepository {
 
     @Autowired
-	JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    private MarketAccountRepository marespo;
 
 
     public long count() {
@@ -55,7 +62,18 @@ public class CustomerRepository {
                                 customer.getEmail(),
                                 customer.getTID(),
                                 customer.getSsn());
-            return 1;
+
+            // deposit 1000 by default
+            double DEFAULT_DEPOSIT = 1000;
+            // MarketAccountRepository marespo = new MarketAccountRepository();
+            MarketAccount marketAccount = new MarketAccount();
+            marketAccount.setBalance(DEFAULT_DEPOSIT);
+            marketAccount.set_username(customer.getUsername());
+            // marketAccount.set_account_date(Util.getCurrentDateFromDBAsString());
+            // marketAccount.set_balance_date(Util.getCurrentDateFromDBAsString());
+            marketAccount.set_account_date(LocalDate.now().toString());
+            marketAccount.set_balance_date(LocalDate.now().toString());
+            return this.marespo.create(marketAccount);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,17 +81,21 @@ public class CustomerRepository {
     };
     
     public int update(Customer customer) {
-        String QUERY = "UPDATE Customer SET"
-                                    + " password = ?,"
-                                    + " name = ?,"
-                                    + " address = ?,"
-                                    + " state = ?,"
-                                    + " phone = ?,"
-                                    + " email = ?,"
-                                    + " tid = ?,"
-                                    + " ssn = ?"
-                                    + " WHERE username = ?";
+
         try {
+
+
+            String QUERY = "UPDATE Customer SET"
+            + " password = ?,"
+            + " name = ?,"
+            + " address = ?,"
+            + " state = ?,"
+            + " phone = ?,"
+            + " email = ?,"
+            + " tid = ?,"
+            + " ssn = ?"
+            + " WHERE username = ?";
+
             jdbcTemplate.update(QUERY,  customer.getPassword(),
                                         customer.getName(),
                                         customer.getAddress(),
@@ -83,6 +105,9 @@ public class CustomerRepository {
                                         customer.getTID(),
                                         customer.getSsn(), 
                                         customer.getUsername().trim()); // WHERE
+
+
+
             return 1;
         } catch (Exception e) {
             e.printStackTrace();

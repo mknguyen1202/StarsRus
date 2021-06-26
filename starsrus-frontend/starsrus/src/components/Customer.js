@@ -39,7 +39,7 @@ class Customer extends Component {
     findCustomerByUsername = (username) => {
         CustomerService.editCustomer(username)
         .then(response =>  {
-            if (response.data != 0) {
+            if (response.data !== 0) {
                 this.setState({
                     username: response.data.username,
                     name: response.data.name,
@@ -73,7 +73,7 @@ class Customer extends Component {
         }
         CustomerService.updateCustomer(customer)
         .then(response => {
-            if (response.data != 0) {
+            if (response.data !== 0) {
                 this.setState(this.initialState);
                 alert("Customer Updated Successfully!");
             } else {
@@ -104,7 +104,7 @@ class Customer extends Component {
 
         CustomerService.createCustomer(newcustomer)
         .then(response => {
-            if (response.data != 0) {
+            if (response.data !== 0) {
                 this.setState(this.initialState);
                 alert("Customer Added Successfully!");
             } else {

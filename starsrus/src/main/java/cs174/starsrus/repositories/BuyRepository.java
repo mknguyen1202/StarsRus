@@ -2,6 +2,7 @@ package cs174.starsrus.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.tree.RowMapper;
@@ -27,7 +28,19 @@ import cs174.starsrus.entities.Withdraw;
 public class BuyRepository {
 
     @Autowired
-	JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    WithdrawRepository wdrespo;
+
+    @Autowired
+    MarketAccountRepository marespo;
+
+    @Autowired
+    StockMarketRepository smrespo;
+
+    @Autowired
+    StockAccountRepository sarespo;
 
 
     public long count() {
@@ -38,11 +51,11 @@ public class BuyRepository {
     public int buy(Buy buy){
         Withdraw withdraw = new Withdraw();
         try {
-            withdraw.set_withdraw_date(Util.getCurrentDateFromDBAsString());
+            // withdraw.set_withdraw_date(Util.getCurrentDateFromDBAsString());
             withdraw.set_username(buy.get_username());
 
             return 1;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -61,10 +74,10 @@ public class BuyRepository {
 
         
         try {
-            WithdrawRepository wdrespo = new WithdrawRepository();
-            MarketAccountRepository marespo = new MarketAccountRepository();
-            StockMarketRepository smrespo = new StockMarketRepository();
-            StockAccountRepository sarespo = new StockAccountRepository();
+            // WithdrawRepository wdrespo = new WithdrawRepository();
+            // MarketAccountRepository marespo = new MarketAccountRepository();
+            // StockMarketRepository smrespo = new StockMarketRepository();
+            // StockAccountRepository sarespo = new StockAccountRepository();
 
             // find the market account to take the money to buy
             MarketAccount ma = marespo.findByMarketAccountUsername(buy.get_username());
@@ -88,7 +101,8 @@ public class BuyRepository {
                 sa = new StockAccount();
                 sa.setBalance(buy.getBuy_shares());
                 sa.setOriginal_buying_price(sm.getCurrent_price());
-                sa.set_account_date(Util.getCurrentDateFromDBAsString());
+                // sa.set_account_date(Util.getCurrentDateFromDBAsString());
+                sa.set_account_date(LocalDate.now().toString());
                 sa.set_username(buy.get_username());
                 sa.set_symbol(buy.get_symbol());
                 sarespo.create(sa); // add to StockAccount
@@ -100,14 +114,16 @@ public class BuyRepository {
                 
                 sa.setBalance(updateBalance);
                 sa.setOriginal_buying_price(updateOriginalBuyPrice);
-                sa.set_account_date(Util.getCurrentDateFromDBAsString());
+                // sa.set_account_date(Util.getCurrentDateFromDBAsString());
+                sa.set_account_date(LocalDate.now().toString());
                 sarespo.update(sa);
             }
 
             // STEP 2: withdraw money from MarketAccount
             double updateBalance = ma.getBalance() - total_money_needed;
             ma.setBalance(updateBalance);
-            ma.set_balance_date(Util.getCurrentDateFromDBAsString());
+            // ma.set_balance_date(Util.getCurrentDateFromDBAsString());
+            ma.set_balance_date(LocalDate.now().toString());
             marespo.update(ma);
 
 

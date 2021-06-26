@@ -23,6 +23,7 @@ import MyAccount from './components/MyAccount';
 import Withdraw from './components/Withdraw';
 import Deposit from './components/Deposit';
 import MyStocks from './components/MyStocks';
+import Login from './components/Login';
 
 
 function App() {
@@ -62,7 +63,13 @@ function App() {
 
         <Container>
         <Switch>
-            <Route path="/" exact component={Home} />
+            {/* <Route path="/" exact component={Login} /> */}
+            {/* <Route path="/:username/" exact component={Home} /> */}
+
+
+
+
+
             <Route path="/customer" exact component={CustomerList} />
             <Route path="/add_customer" exact component={Customer} />
             <Route path="/edit_customer/:username" exact component={Customer} />
@@ -87,6 +94,21 @@ function App() {
 
             <Route path="/stockmarket" exact component={StockMarketList} />
             <Route path="/add_stockmarket/:symbol/:stocktime" exact component={StockMarketChangePrice} />
+
+
+
+
+            <Route path="/:username/myaccount" exact component={MyAccount} />
+            <Route path="/:username/withdraw" exact component={Withdraw} />
+            <Route path="/:username/deposit" exact component={Deposit} />
+
+            <Route path="/:username/mystocks" exact component={MyStocks} />
+
+            <Route path="/:username/actormovie/:symbol/:actor_name" exact component={ActorMovieList} />
+
+            <Route path="/:username/stockmarket" exact component={StockMarketList} />
+            <Route path="/:username/add_stockmarket/:symbol/:stocktime" exact component={StockMarketChangePrice} />
+
 
         </Switch>
         </Container>

@@ -16,7 +16,7 @@ class CustomerService {
     }
 
     editCustomer(data) {
-        return axios.get("http://localhost:8080/api/customer/" + data);
+        return axios.get("http://localhost:8080/api/customer/" + data );
     }
 
     updateCustomer(data) {

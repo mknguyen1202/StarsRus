@@ -31,10 +31,10 @@ public class CustomerController {
         return this.customerRepository.findAll();
     }
 
-    @GetMapping("customer/{username}")
-    public Customer getCustomerByUsername(@PathVariable(value="username") String username) {
-        return this.customerRepository.findByUsername(username);
-    }
+    // @GetMapping("customer")
+    // public Customer getCustomerByUsername(@PathVariable(value="username") String username) {
+    //     return this.customerRepository.findByUsername(username);
+    // }
 
     @PostMapping("add_customer")
     public int createCustomer(@RequestBody Customer customer) {

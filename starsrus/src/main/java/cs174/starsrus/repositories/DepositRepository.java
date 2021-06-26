@@ -1,6 +1,7 @@
 package cs174.starsrus.repositories;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.tree.RowMapper;
@@ -24,7 +25,10 @@ import cs174.starsrus.entities.Withdraw;
 public class DepositRepository {
 
     @Autowired
-	JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    MarketAccountRepository marepos;
 
 
     public long count() {
@@ -40,7 +44,7 @@ public class DepositRepository {
     public int deposit(Deposit deposit) {
         try {
             // get marketaccount first
-            MarketAccountRepository marepos = new MarketAccountRepository();
+            // MarketAccountRepository marepos;
 
             MarketAccount ma = marepos.findByMarketAccountUsername(deposit.get_username());
             
@@ -52,7 +56,8 @@ public class DepositRepository {
             // Add money to market account;
             double updateBalance = ma.getBalance() + deposit.getDeposit_amount();
             ma.setBalance(updateBalance);
-            ma.set_balance_date(Util.getCurrentDateFromDBAsString());
+            // ma.set_balance_date(Util.getCurrentDateFromDBAsString());
+            ma.set_balance_date(LocalDate.now().toString());
             marepos.update(ma); // update/add money to market accout
 
             // Add to deposit history

@@ -110,7 +110,8 @@ CREATE TABLE IF NOT EXISTS Buy (
         ON UPDATE CASCADE,
     FOREIGN KEY (symbol) REFERENCES StockMarket(symbol)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+    CHECK (buy_shares > 0)
 );
 
 CREATE TABLE IF NOT EXISTS Sell (
@@ -126,8 +127,8 @@ CREATE TABLE IF NOT EXISTS Sell (
         ON UPDATE CASCADE,
     FOREIGN KEY (symbol) REFERENCES StockMarket(symbol)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
-
+        ON UPDATE CASCADE,
+    CHECK(sell_shares > 0)
 );
 
 CREATE TABLE IF NOT EXISTS Deposit (
@@ -138,7 +139,8 @@ CREATE TABLE IF NOT EXISTS Deposit (
     PRIMARY KEY (deposit_id),
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+    CHECK (deposit_amount > 0)
 );
 
 CREATE TABLE IF NOT EXISTS Withdraw (
@@ -149,7 +151,8 @@ CREATE TABLE IF NOT EXISTS Withdraw (
     PRIMARY KEY (withdraw_id),
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+    CHECK (withdraw_amount > 0)
 );
 
 CREATE TABLE IF NOT EXISTS AccrueInterest (
@@ -161,4 +164,9 @@ CREATE TABLE IF NOT EXISTS AccrueInterest (
     FOREIGN KEY (username) REFERENCES Customer(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS TodaysDate (
+    todays_date TEXT
 );

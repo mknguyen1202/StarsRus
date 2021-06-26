@@ -20,7 +20,9 @@ import cs174.starsrus.entities.Admin;
 public class AdminRepository {
 
     @Autowired
-	JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
+    
+    final private String SUPREME_ADMIN = "admin"; // cannot be deleted;
 
 
     public long count() {
@@ -91,6 +93,10 @@ public class AdminRepository {
     };
 
     public int deleteByUsername(String username) {
+        
+        // CANNOT DELETE SUPREME ADMIN
+        if (username.equalsIgnoreCase(SUPREME_ADMIN)) return 0; 
+
         String QUERY = "DELETE FROM Administrator WHERE admin_username = ?";
         try {
             jdbcTemplate.update(QUERY, username);

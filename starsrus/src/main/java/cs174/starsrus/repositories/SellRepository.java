@@ -1,6 +1,7 @@
 package cs174.starsrus.repositories;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.tree.RowMapper;
@@ -26,7 +27,19 @@ import cs174.starsrus.entities.StockMarket;
 public class SellRepository {
 
     @Autowired
-	JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    DepositRepository derespo;
+
+    @Autowired
+    MarketAccountRepository marespo;
+
+    @Autowired
+    StockAccountRepository sarespo;
+
+    @Autowired
+    StockMarketRepository smrespo;
 
 
     public long count() {
@@ -42,11 +55,11 @@ public class SellRepository {
      */
     public int create(Sell sell) {
         try {
-            DepositRepository derespo = new DepositRepository();
+            // DepositRepository derespo = new DepositRepository();
             Deposit deposit = new Deposit();
-            MarketAccountRepository marespo = new MarketAccountRepository();
-            StockAccountRepository sarespo = new StockAccountRepository();
-            StockMarketRepository smrespo = new StockMarketRepository();
+            // MarketAccountRepository marespo = new MarketAccountRepository();
+            // StockAccountRepository sarespo = new StockAccountRepository();
+            // StockMarketRepository smrespo = new StockMarketRepository();
 
             // get customer's market account, the stock account, and the stock from the stock market
             MarketAccount marketAccount = marespo.findByMarketAccountUsername(sell.get_username());
@@ -70,7 +83,8 @@ public class SellRepository {
 
             double earning_from_sale = total_sell_in_dollars - original_worth;
             sell.setEarnings_from_sale(earning_from_sale);
-            sell.set_sell_date(Util.getCurrentDateFromDBAsString());    // current date (in the system) for sell
+            // sell.set_sell_date(Util.getCurrentDateFromDBAsString());    // current date (in the system) for sell
+            sell.set_sell_date(LocalDate.now().toString());
 
             // substract shares from StockAccount
             stockAccount.setBalance(stockAccount.getBalance() - sell.getSell_shares());
@@ -83,7 +97,8 @@ public class SellRepository {
             // add to deposit and to sell history
             // to deposit history
             deposit.setDeposit_amount(total_sell_in_dollars);
-            deposit.set_deposit_date(Util.getCurrentDateFromDBAsString());
+            // deposit.set_deposit_date(Util.getCurrentDateFromDBAsString());
+            deposit.set_deposit_date(LocalDate.now().toString());
             deposit.set_username(sell.get_username());
             derespo.create(deposit);    
             

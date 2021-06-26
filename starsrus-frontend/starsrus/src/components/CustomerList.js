@@ -27,11 +27,11 @@ class CustomerList extends React.Component {
             CustomerService.deleteCustomer(username)
             .then(response => {
                 console.log(response);
-                if (response.data != 0) {
+                if (response.data !== 0) {
                     
                     alert("Customer Deleted Successfully!");
                     this.setState({
-                        customers: this.state.customers.filter(customer => customer.username != username)
+                        customers: this.state.customers.filter(customer => customer.username !== username)
                     });
                     this.handleClose();
                 } else {
@@ -100,6 +100,8 @@ class CustomerList extends React.Component {
                                         <Link to={"edit_customer/"+customer.username} className="btn btn-primary">EDIT</Link>
                                         {" "}
                                         <Button variant="danger" onClick={this.handleShow.bind(this, customer.username)}>DELETE</Button>
+
+                                        <Button variant="info" >STATEMENT</Button>
                                     </ButtonGroup>    
 
                                     {/* THIS IS FOR CONFIRMATION FORM*/}
