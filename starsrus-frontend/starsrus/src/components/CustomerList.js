@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 
 
 class CustomerList extends React.Component {
+    
     constructor (props) {
         super(props)
         this.state = {
@@ -49,6 +50,7 @@ class CustomerList extends React.Component {
             username: deleteusername
         });
     };
+
     handleClose = e => { 
         this.setState({
             show: false

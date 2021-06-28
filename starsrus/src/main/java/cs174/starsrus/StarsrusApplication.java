@@ -26,7 +26,7 @@ public class StarsrusApplication implements CommandLineRunner{
 
 		// }
 		// System.out.println(customerRepository.findAll());
-		System.out.println("NUMBER OF DAYS: " + Util.numDaysInMonth(2021, 6));
+		// System.out.println("NUMBER OF DAYS: " + Util.numDaysInMonth(2021, 6));
 
 		String DEFAULT_DATE = "DATE('now')";
 		// SystemDateController sDateController = new SystemDateController();

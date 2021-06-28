@@ -1,17 +1,17 @@
 package cs174.starsrus.repositories;
 
-import java.sql.ResultSet;
+
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.swing.tree.RowMapper;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import cs174.starsrus.Util;
+
 
 // import org.springframework.data.repository.CrudRepository;
 
@@ -130,6 +130,7 @@ public class CustomerRepository {
         String QUERY = "SELECT * FROM Customer";
         return jdbcTemplate.query(QUERY, new CustomerRowMapper());
     };
+
     public Customer findByUsername(String username) {
         String QUERY = "SELECT * FROM Customer WHERE username=?";
 		return jdbcTemplate.queryForObject(QUERY, new Object[] { username },

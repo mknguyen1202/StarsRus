@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import cs174.starsrus.Util;
+import cs174.starsrus.util.Util;
 import cs174.starsrus.entities.Deposit;
 import cs174.starsrus.entities.MarketAccount;
 

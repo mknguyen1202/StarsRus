@@ -1,4 +1,4 @@
-package cs174.starsrus;
+package cs174.starsrus.util;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
