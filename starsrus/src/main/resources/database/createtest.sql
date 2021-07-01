@@ -8,7 +8,8 @@ SET NAMES utf8;
 -- SET character_set_client = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS User (
-    username VARCHAR(30) NOT NULL,
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    username VARCHAR(30) NOT NULL UNIQUE,
     password VARCHAR(30),
     firstname VARCHAR(30),
     lastname VARCHAR(30),
@@ -17,28 +18,37 @@ CREATE TABLE IF NOT EXISTS User (
     state VARCHAR(2),
     phone VARCHAR(15),
     email VARCHAR(254),
-    SSN VARCHAR(9),
-    registration_date DATETIME,
+    ssn VARCHAR(9),
+    -- registration_date DATETIME,
     net_balance REAL,
-    PRIMARY KEY (username)
+    PRIMARY KEY (id)
+);
+
+
+CREATE TABLE IF NOT EXISTS User (
+    id BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    email VARCHAR(50) UNIQUE,
+    password VARCHAR(120),
+    username VARCHAR(20) UNIQUE ,
+    PRIMARY KEY (id)
 );
 
 -- symbol is from Stock API
 CREATE TABLE IF NOT EXISTS UserWatchList (
-    username VARCHAR(30),
+    user_id BIGINT UNSIGNED,
     symbol VARCHAR(15) NOT NULL,
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (user_id) REFERENCES User(id)
     ON DELETE SET NULL 
     ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS UserStockList(
-    username VARCHAR(30),
+    user_id BIGINT UNSIGNED,
     symbol VARCHAR(15) NOT NULL,
     shares REAL,
     purchase_price REAL,
     purchase_date DATETIME,
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (user_id) REFERENCES User(id)
     ON DELETE SET NULL 
     ON UPDATE CASCADE
 );
@@ -47,10 +57,10 @@ CREATE TABLE IF NOT EXISTS BuyStock (
     buy_id BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT,
     buy_datetime DATETIME,
     buy_shares REAL,
-    username VARCHAR(30),
+    user_id BIGINT UNSIGNED,
     symbol VARCHAR(15),
     PRIMARY KEY (buy_id),
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (user_id) REFERENCES User(id)
     ON DELETE SET NULL 
     ON UPDATE CASCADE
 );
@@ -60,21 +70,21 @@ CREATE TABLE IF NOT EXISTS SellStock (
     sell_datetime DATETIME,
     sell_shares REAL,
     earnings_from_sale REAL,
-    username VARCHAR(30),
+    user_id BIGINT UNSIGNED,
     symbol VARCHAR(15),
     PRIMARY KEY (sell_id),
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (user_id) REFERENCES User(id)
     ON DELETE SET NULL 
     ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Statement (
     statement_id INT UNSIGNED AUTO_INCREMENT,
-    username VARCHAR(30),
+    user_id BIGINT UNSIGNED,
     balance REAL,
     statement_date DATETIME,
     PRIMARY KEY(statement_id),
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (user_id) REFERENCES User(id)
     ON DELETE SET NULL 
     ON UPDATE CASCADE
 );
@@ -83,9 +93,9 @@ CREATE TABLE IF NOT EXISTS WalletTransaction (
     transaction_id BIGINT UNSIGNED AUTO_INCREMENT,
     transaction_date DATETIME,
     transaction_amount REAL,
-    username VARCHAR(30),
+    user_id BIGINT UNSIGNED,
     PRIMARY KEY (transaction_id),
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (user_id) REFERENCES User(id)
     ON DELETE SET NULL 
     ON UPDATE CASCADE
 );
@@ -95,20 +105,20 @@ CREATE TABLE IF NOT EXISTS WalletTransaction (
 --                              ROLES
 -- ----------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS Roles(
-    role_id INT NOT NULL AUTO_INCREMENT,
-    role_name VARCHAR(50),
-    PRIMARY KEY(role_id)
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50),
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS UserRole(
-    username VARCHAR(30) NOT NULL,
+    user_id BIGINT UNSIGNED NOT NULL ,
     role_id INT NOT NULL,
     -- PRIMARY KEY(username, role_id)
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (user_id) REFERENCES User(id)
         ON UPDATE CASCADE 
         ON DELETE RESTRICT,
-    FOREIGN KEY (role_id) REFERENCES Roles(role_id)
+    FOREIGN KEY (role_id) REFERENCES Roles(id)
         ON UPDATE CASCADE 
         ON DELETE RESTRICT,
-    PRIMARY KEY (username, role_id)
+    PRIMARY KEY (user_id, role_id)
 );
