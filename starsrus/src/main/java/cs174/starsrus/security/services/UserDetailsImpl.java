@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import cs174.starsrus.entities.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +21,7 @@ public class UserDetailsImpl implements UserDetails {
 	private String username;
 	private String firstname;
 	private String lastname;
-	private String DOB;
+	private String dob;
 	private String address;
 	private String state;
 	private String phone;
@@ -78,8 +77,6 @@ public class UserDetailsImpl implements UserDetails {
 				user.getPhone(),
 				user.getEmail(),
 				user.getSsn(),
-				user.getRegistration_date(),
-				user.getNet_balance(),
 				authorities);
 	}
 

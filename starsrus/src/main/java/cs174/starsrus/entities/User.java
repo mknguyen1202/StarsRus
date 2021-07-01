@@ -1,6 +1,7 @@
 package cs174.starsrus.entities;
 
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,14 +9,15 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Min;
 
-import cs174.models.Role;
+
 
 @Entity
-@Table(	name = "users", 
+@Table(	name = DBTables.TABLE_USER.TABLENAME, 
 		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
+			@UniqueConstraint(columnNames = DBTables.TABLE_USER.ATTR_USERNAME),
+			@UniqueConstraint(columnNames = DBTables.TABLE_USER.ATTR_EMAIL) 
 		})
 public class User {
 	@Id
@@ -27,29 +29,82 @@ public class User {
 	private String username;
 
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 30)
+	private String password;
+
+	@NotBlank
+	@Size(max = 30)
+	private String firstname;
+
+	@NotBlank
+	@Size(max = 30)	
+	private String lastname;
+
+	@NotBlank
+	private String dob;
+
+	@NotBlank
+	@Size(max = 70)
+	private String address;
+
+	@NotBlank
+	@Size(max = 2)
+	private String state;
+
+	@NotBlank
+	@Size(max = 15)
+	private String phone;
+
+	@NotBlank
+	@Size(max = 254)
 	@Email
 	private String email;
 
 	@NotBlank
-	@Size(max = 120)
-	private String password;
+	@Size(max = 9)
+	private String ssn;
+
+	@NotBlank
+	private LocalDateTime registration_date;
+
+	@Min(0)
+	private double net_balance;
+
+
+
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = DBTables.TABLE_USER_ROLE.ATTR_USER_ID, 
+	@JoinTable(	name = DBTables.TABLE_USER_ROLE.TABLENAME, 
 				joinColumns = @JoinColumn(name = DBTables.TABLE_USER_ROLE.ATTR_USER_ID), 
-				inverseJoinColumns = @JoinColumn(name =  DBTables.TABLE_USER_ROLE.ATTR_ROLE_ID))
+				inverseJoinColumns = @JoinColumn(name = DBTables.TABLE_USER_ROLE.ATTR_ROLE_ID))
 	private Set<Role> roles = new HashSet<>();
 
 	public User() {
 	}
 
-	public User(String username, String email, String password) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
-
+	public User(String username, 
+				String password, 
+				String firstname,
+				String lastname,
+				String dob,
+				String address,
+				String state,
+				String phone,
+				String email,
+				String ssn) {
+					this.username = username;
+					this.password = password;
+					this.firstname = firstname;
+					this.lastname = lastname;
+					this.dob = dob;
+					this.address = address;
+					this.state = state;
+					this.phone = phone;
+					this.email = email;
+					this.ssn = ssn;
+					this.registration_date = LocalDateTime.now();
+					this.net_balance = 0;
+				}
 	public Long getId() {
 		return id;
 	}
@@ -88,5 +143,78 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getDob() {
+		return this.dob;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getState() {
+		return this.state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getSsn() {
+		return this.ssn;
+	}
+
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
+
+	public LocalDateTime getRegistration_date() {
+		return this.registration_date;
+	}
+
+	public void setRegistration_date(LocalDateTime registration_date) {
+		this.registration_date = registration_date;
+	}
+
+	public double getNet_balance() {
+		return this.net_balance;
+	}
+
+	public void setNet_balance(double net_balance) {
+		this.net_balance = net_balance;
 	}
 }

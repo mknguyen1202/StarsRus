@@ -1,4 +1,4 @@
-package cs174.models;
+package cs174.starsrus.entities;
 
 public enum ERole {
     ROLE_USER,

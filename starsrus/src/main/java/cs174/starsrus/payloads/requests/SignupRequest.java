@@ -1,10 +1,10 @@
 package cs174.starsrus.payloads.requests;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 import javax.validation.constraints.*;
- 
+import java.time.LocalDateTime;
+
 
 public class SignupRequest {
 
@@ -41,7 +41,7 @@ public class SignupRequest {
     private String lastname;
 
     @NotBlank
-    private String DOB;
+    private String dob;
 
     @NotBlank
     @Size(max = 50)
@@ -65,7 +65,7 @@ public class SignupRequest {
 	private String ssn;
 
 	@NotBlank
-    private LocalDate registration_date;
+    private LocalDateTime registration_date;
     
 	public String getFirstname() {
 		return this.firstname;
@@ -83,12 +83,12 @@ public class SignupRequest {
 		this.lastname = lastname;
 	}
 
-	public String getDOB() {
-		return this.DOB;
+	public String getDob() {
+		return this.dob;
 	}
 
-	public void setDOB(String DOB) {
-		this.DOB = DOB;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 
 
@@ -136,11 +136,11 @@ public class SignupRequest {
 
 
 
-	public LocalDate getRegistration_date() {
+	public LocalDateTime getRegistration_date() {
 		return this.registration_date;
 	}
 
-	public void setRegistration_date(LocalDate registration_date) {
+	public void setRegistration_date(LocalDateTime registration_date) {
 		this.registration_date = registration_date;
 	}
 

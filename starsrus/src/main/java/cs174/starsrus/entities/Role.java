@@ -1,4 +1,4 @@
-package cs174.models;
+package cs174.starsrus.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,25 +12,25 @@ import javax.persistence.Table;
 import cs174.starsrus.entities.DBTables;
 
 @Entity
-@Table(name = DBTables.TABLE_ROLES.TABLENAME)
+@Table(name = DBTables.TABLE_ROLE.TABLENAME)
 public class Role {
-
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Enumerated(EnumType.STRING)
-    private ERole name;
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private ERole name;
 
-    public Role() {
+	public Role() {
 
-    }
+	}
 
-    public Role(ERole name) {
+	public Role(ERole name) {
 		this.name = name;
 	}
-    
-    public Integer getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
@@ -45,5 +45,4 @@ public class Role {
 	public void setName(ERole name) {
 		this.name = name;
 	}
-
 }
