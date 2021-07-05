@@ -19,14 +19,31 @@ public class SignupRequest {
     // String email,
     // String ssn,
     // LocalDate registration_date,
-    // double net_balance
+	// double net_balance
+	
+	/**
+	 * 
+{
+  "username": "mod",
+  "password": "password1",
+  "firstname": "modfirstname",
+  "lastname": "modlastname",
+  "dob":"1990-02-02",
+  "address":"modaddress",
+  "state":"CA",
+  "phone":"123456789",
+  "email":"mod@gmail.com",
+  "ssn":"012345679",
+  "role":["mod", "user"]
+}
+	 */
 
     @NotBlank
     @Size(min = 3, max = 30)
     private String username;
 
     @NotBlank
-    @Size(min = 6, max = 30)
+    @Size(min = 6, max = 120)
     private String password;
  
     private Set<String> role;
@@ -64,9 +81,6 @@ public class SignupRequest {
 	@Size(max = 9)
 	private String ssn;
 
-	@NotBlank
-    private LocalDateTime registration_date;
-    
 	public String getFirstname() {
 		return this.firstname;
 	}
@@ -133,17 +147,6 @@ public class SignupRequest {
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
-
-
-
-	public LocalDateTime getRegistration_date() {
-		return this.registration_date;
-	}
-
-	public void setRegistration_date(LocalDateTime registration_date) {
-		this.registration_date = registration_date;
-	}
-
 
   
     public String getUsername() {

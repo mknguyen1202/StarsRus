@@ -9,17 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import cs174.starsrus.entities.DBTables;
+
 
 @Entity
 @Table(name = DBTables.TABLE_ROLE.TABLENAME)
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = DBTables.TABLE_ROLE.ATTR_ROLE_ID, length = 50)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
+	@Column(name = DBTables.TABLE_ROLE.ATTR_ROLE_NAME, length = 50)
 	private ERole name;
 
 	public Role() {

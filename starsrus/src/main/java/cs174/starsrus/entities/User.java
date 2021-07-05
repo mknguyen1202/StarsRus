@@ -2,6 +2,7 @@ package cs174.starsrus.entities;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,11 +26,11 @@ public class User {
 	private Long id;
 
 	@NotBlank
-	@Size(max = 20)
+	@Size(max = 30)
 	private String username;
 
 	@NotBlank
-	@Size(max = 30)
+	@Size(max = 120)
 	private String password;
 
 	@NotBlank
@@ -65,7 +66,8 @@ public class User {
 	private String ssn;
 
 	@NotBlank
-	private LocalDateTime registration_date;
+	
+	private String registration_date;
 
 	@Min(0)
 	private double net_balance;
@@ -92,6 +94,7 @@ public class User {
 				String phone,
 				String email,
 				String ssn) {
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 					this.username = username;
 					this.password = password;
 					this.firstname = firstname;
@@ -102,7 +105,8 @@ public class User {
 					this.phone = phone;
 					this.email = email;
 					this.ssn = ssn;
-					this.registration_date = LocalDateTime.now();
+					this.registration_date = LocalDateTime.now().format(formatter);
+					System.out.println(" USER ============================================" + this.registration_date.toString());
 					this.net_balance = 0;
 				}
 	public Long getId() {
@@ -202,11 +206,11 @@ public class User {
 		this.ssn = ssn;
 	}
 
-	public LocalDateTime getRegistration_date() {
+	public String getRegistration_date() {
 		return this.registration_date;
 	}
 
-	public void setRegistration_date(LocalDateTime registration_date) {
+	public void setRegistration_date(String registration_date) {
 		this.registration_date = registration_date;
 	}
 
@@ -217,4 +221,22 @@ public class User {
 	public void setNet_balance(double net_balance) {
 		this.net_balance = net_balance;
 	}
+
+
+	/**
+	 * 
+{
+  "username": "user1",
+  "password": "password1",
+  "firstname": "firstname1",
+  "lastname": "lastname1",
+  "dob":"1990-01-01",
+  "address":"1010 Holister, Apartment 110",
+  "state":"CA",
+  "phone":"0123456789",
+  "email": "user1@gmail.com",
+  "ssn": "123456789",
+  "role": ["mod", "user"]
+}
+	 */
 }

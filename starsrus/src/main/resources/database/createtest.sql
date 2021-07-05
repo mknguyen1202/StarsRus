@@ -10,7 +10,7 @@ SET NAMES utf8;
 CREATE TABLE IF NOT EXISTS user (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(30),
+    password VARCHAR(120),
     firstname VARCHAR(30),
     lastname VARCHAR(30),
     dob DATE,
@@ -107,113 +107,16 @@ CREATE TABLE IF NOT EXISTS user_role(
     user_id BIGINT UNSIGNED NOT NULL ,
     role_id INT NOT NULL,
     -- PRIMARY KEY(username, role_id)
-    FOREIGN KEY (user_id) REFERENCES user(id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-    FOREIGN KEY (role_id) REFERENCES role(role_id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
+    -- FOREIGN KEY (user_id) REFERENCES user(id)
+    --     ON UPDATE CASCADE 
+    --     ON DELETE RESTRICT,
+    -- FOREIGN KEY (role_id) REFERENCES role(role_id)
+    --     ON UPDATE CASCADE 
+    --     ON DELETE RESTRICT,
     PRIMARY KEY (user_id, role_id)
 );
 
 
-
-
-
-
-
-CREATE TABLE IF NOT EXISTS User (
-    id BIGINT(20) NOT NULL AUTO_INCREMENT,
-    email VARCHAR(50) UNIQUE,
-    password VARCHAR(120),
-    username VARCHAR(20) UNIQUE ,
-    PRIMARY KEY (id)
-);
-
-
-CREATE TABLE IF NOT EXISTS Roles(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50),
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS UserRole (
-    user_id BIGINT(20) NOT NULL,
-    role_id INT NOT NULL,
-    -- PRIMARY KEY(username, role_id)
-    FOREIGN KEY (user_id) REFERENCES User(id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-    FOREIGN KEY (role_id) REFERENCES Roles(id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-    PRIMARY KEY (user_id, role_id)
-);
-
-
-
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT(20) NOT NULL AUTO_INCREMENT,
-    email VARCHAR(50) UNIQUE,
-    password VARCHAR(120),
-    username VARCHAR(20) UNIQUE ,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS roles(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50),
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS user_roles(
-    user_id BIGINT(20) NOT NULL,
-    role_id INT NOT NULL,
-    -- PRIMARY KEY(username, role_id)
-    FOREIGN KEY (user_id) REFERENCES users(id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-    FOREIGN KEY (role_id) REFERENCES roles(id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-    PRIMARY KEY (user_id, role_id)
-);
-
-
-
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-
-
-
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT(20) NOT NULL AUTO_INCREMENT,
-    email VARCHAR(50) UNIQUE,
-    password VARCHAR(120),
-    username VARCHAR(20) UNIQUE ,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS roles(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50),
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS users_roles(
-    user_id BIGINT(20) NOT NULL,
-    role_id INT NOT NULL,
-    -- PRIMARY KEY(username, role_id)
-    FOREIGN KEY (user_id) REFERENCES users(id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-    FOREIGN KEY (role_id) REFERENCES roles(id)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-    PRIMARY KEY (user_id, role_id)
-);
-
-INSERT INTO Roles(name) VALUES('ROLE_USER');
-INSERT INTO Roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO Roles(name) VALUES('ROLE_ADMIN');
+INSERT INTO role(role_name) VALUES('ROLE_USER');
+INSERT INTO role(role_name) VALUES('ROLE_MODERATOR');
+INSERT INTO role(role_name) VALUES('ROLE_ADMIN');

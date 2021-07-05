@@ -1,6 +1,7 @@
 package cs174.starsrus.security.services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -13,11 +14,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import cs174.starsrus.entities.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-
 	private String username;
 	private String firstname;
 	private String lastname;
@@ -25,12 +27,15 @@ public class UserDetailsImpl implements UserDetails {
 	private String address;
 	private String state;
 	private String phone;
+	private String email;
+	private String ssn;
+	
 	private String registration_date;
 	private double net_balance;
 
 
 
-	private String email;
+	
 
 
 	@JsonIgnore
@@ -43,22 +48,30 @@ public class UserDetailsImpl implements UserDetails {
 							String password,
 							String firstname,
 							String lastname,
-							String DOB,
+							String dob,
 							String address,
 							String state,
 							String phone,
 							String email,
 							String ssn,
-							String registration_date,
-							double net_balance,
-							
 			Collection<? extends GrantedAuthority> authorities) {
-		// this.id = id;
-		this.username = username;
-		this.email = email;
+		this.id = id;
+		this.username = username;		
 		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.dob = dob;
+		this.address = address;
+		this.state = state;
+		this.phone = phone;
+		this.email = email;
+		this.ssn = ssn;
+		this.registration_date = LocalDateTime.now().toString();
+		this.net_balance = 0;
 		this.authorities = authorities;
 	}
+
+
 
 	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -71,7 +84,7 @@ public class UserDetailsImpl implements UserDetails {
 				user.getPassword(),
 				user.getFirstname(),
 				user.getLastname(),
-				user.getDOB(),
+				user.getDob(),
 				user.getAddress(),
 				user.getState(),
 				user.getPhone(),
@@ -120,12 +133,20 @@ public class UserDetailsImpl implements UserDetails {
 		this.lastname = lastname;
 	}
 
-	public String getDOB() {
-		return this.DOB;
+	public String getSsn() {
+		return ssn;
 	}
 
-	public void setDOB(String DOB) {
-		this.DOB = DOB;
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
+
+	public String getDob() {
+		return this.dob;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 
 	public String getAddress() {
@@ -156,8 +177,8 @@ public class UserDetailsImpl implements UserDetails {
 		return this.registration_date;
 	}
 
-	public void setRegistration_date(LocalDate registration_date) {
-		this.registration_date = registration_date.toString();
+	public void setRegistration_date(String registration_date) {
+		this.registration_date = registration_date;
 	}
 
 	public double getNet_balance() {
