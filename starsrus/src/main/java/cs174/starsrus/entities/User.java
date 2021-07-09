@@ -106,7 +106,6 @@ public class User {
 					this.email = email;
 					this.ssn = ssn;
 					this.registration_date = LocalDateTime.now().format(formatter);
-					System.out.println(" USER ============================================" + this.registration_date.toString());
 					this.net_balance = 0;
 				}
 	public Long getId() {

@@ -28,7 +28,9 @@ public class DBTables {
     }
 
     public static class TABLE_USER_WATCH_LIST {
-        public static final String TABLENAME = "user_watch_list";   
+        public static final String TABLENAME = "user_watch_list"; 
+        public static final String TABLENAME = "user_id"; 
+        
     }
 
     public static class TABLE_USER_STOCK_LIST {
