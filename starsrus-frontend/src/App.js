@@ -66,15 +66,15 @@ class App extends Component {
       <Router history={history}>
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
-            <Link to={"/"} className="navbar-brand">
+            <Link to={"/home"} className="navbar-brand">
               StarsRus
             </Link>
             <div className="navbar-nav mr-auto">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
                   <img src={home_icon} width="25" height="25" alt="Home"/>
                 </Link>
-              </li>
+              </li> */}
 
               {showModeratorBoard && (
                 <li className="nav-item">
@@ -92,13 +92,13 @@ class App extends Component {
                 </li>
               )}
 
-              {currentUser && (
+              {/* {currentUser && (
                 <li className="nav-item">
                   <Link to={"/user"} className="nav-link">
                   <img src={user_icon} width="25" height="25" alt="User"/>
                   </Link>
                 </li>
-              )}
+              )} */}
             </div>
 
             {currentUser ? (
@@ -120,7 +120,8 @@ class App extends Component {
                 </li>
                 <li className="nav-item">
                   <Link to={"/profile"} className="nav-link">
-                    {currentUser.username}
+                    {/* {currentUser.username} */}
+                    <img src={user_icon} width="25" height="25" alt="User"/>
                   </Link>
                 </li>
                 <li className="nav-item">
