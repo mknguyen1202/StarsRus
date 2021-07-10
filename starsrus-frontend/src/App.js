@@ -18,6 +18,15 @@ import { clearMessage } from "./actions/message";
 
 import { history } from './helpers/history';
 
+// icon imports
+import home_icon from "./icons/home.png"
+import logout_icon from "./icons/logout.png"
+import messages_icon from "./icons/messages.png"
+import moderator_icon from "./icons/moderator.png"
+import notifications_icon from "./icons/notifications.png"
+import stock_market_icon from "./icons/stock_market.png"
+import user_icon from "./icons/user.png"
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -58,12 +67,12 @@ class App extends Component {
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
             <Link to={"/"} className="navbar-brand">
-              bezKoder
+              StarsRus
             </Link>
             <div className="navbar-nav mr-auto">
               <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
-                  Home
+                  <img src={home_icon} width="25" height="25" alt="Home"/>
                 </Link>
               </li>
 
@@ -86,7 +95,7 @@ class App extends Component {
               {currentUser && (
                 <li className="nav-item">
                   <Link to={"/user"} className="nav-link">
-                    User
+                  <img src={user_icon} width="25" height="25" alt="User"/>
                   </Link>
                 </li>
               )}
@@ -95,13 +104,28 @@ class App extends Component {
             {currentUser ? (
               <div className="navbar-nav ml-auto">
                 <li className="nav-item">
+                  <Link to={"/stock_market"} className="nav-link">
+                    <img src={stock_market_icon} width="25" height="25" alt="Stock Market"/>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/notifications"} className="nav-link">
+                    <img src={notifications_icon} width="25" height="25" alt="Notifications"/>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/messages"} className="nav-link">
+                    <img src={messages_icon} width="25" height="25" alt="Messages"/>
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link to={"/profile"} className="nav-link">
                     {currentUser.username}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <a href="/login" className="nav-link" onClick={this.logOut}>
-                    LogOut
+                    <img src={logout_icon} width="25" height="25" alt="Logout"/>
                   </a>
                 </li>
               </div>
