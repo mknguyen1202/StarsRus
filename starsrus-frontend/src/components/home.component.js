@@ -7,7 +7,7 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      content: ""
+      content: "THIS IS PUBLIC HOME"
     };
   }
 

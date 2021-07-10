@@ -57,8 +57,16 @@ class Register extends Component {
 
     this.state = {
       username: "",
-      email: "",
       password: "",
+      repeatpassword: "",
+      firstname: "",
+      lastname: "",
+      dob: "",
+      address: "",
+      state: "",
+      phone: "",
+      email: "",
+      ssn: "",
       successful: false,
     };
   }
@@ -76,6 +84,12 @@ class Register extends Component {
   }
 
   onChangePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
+  onChangeRepeatPassword(e) {
     this.setState({
       password: e.target.value,
     });
@@ -126,8 +140,12 @@ class Register extends Component {
               this.form = c;
             }}
           >
-            {!this.state.successful && (
+
+            {
+            !this.state.successful && (
+              
               <div>
+
                 <div className="form-group">
                   <label htmlFor="username">Username</label>
                   <Input
@@ -138,6 +156,108 @@ class Register extends Component {
                     onChange={this.onChangeUsername}
                     validations={[required, vusername]}
                   />
+                </div>
+                <div className="form-row">
+                  <div className="form-group col">
+                    <label htmlFor="password">Password</label>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.onChangePassword}
+                      validations={[required, vpassword]}
+                    />
+                  </div>
+
+                  <div className="form-group col">
+                    <label htmlFor="password">Repeat Password</label>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={this.state.repeatpassword}
+                      onChange={this.onChangeRepeatPassword}
+                      validations={[required, vpassword]}
+                    />
+                  </div> 
+                </div>
+               
+                <div className="form-group">
+                  <label htmlFor="firstname">Firstname</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="firstname"
+                    value={this.state.firstname}
+                    onChange={this.onChangeFirstname}
+                    // validations={[required, firstname]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="lastname">Lastname</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="lastname"
+                    value={this.state.lastname}
+                    onChange={this.onChangeLastname}
+                    // validations={[required, lastname]}
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="address">Address 1</label>
+                  <Input
+                    
+                    type="text"
+                    className="form-control"
+                    name="address"
+                    placeholder = "1234 Main St"
+                    value={this.state.address}
+                    onChange={this.onChangeLastname}
+                    // validations={[required, lastname]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="address2">Address 2</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="address2"
+                    placeholder = "Apartment, studio, or floor #123"
+                    value={this.state.address2}
+                    onChange={this.onChangeLastname}
+                    // validations={[required, lastname]}
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group col">
+                    <label htmlFor="password">State</label>
+                    <Input
+                      type="select"
+                      className="form-control"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.onChangePassword}
+                      validations={[required, vpassword]}
+                    />
+                  </div>
+
+                  <div className="form-group col">
+                    <label htmlFor="password">Repeat Password</label>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={this.state.repeatpassword}
+                      onChange={this.onChangeRepeatPassword}
+                      validations={[required, vpassword]}
+                    />
+                  </div> 
                 </div>
 
                 <div className="form-group">
@@ -152,23 +272,14 @@ class Register extends Component {
                   />
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    validations={[required, vpassword]}
-                  />
-                </div>
+
 
                 <div className="form-group">
                   <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
               </div>
-            )}
+            )
+            }
 
             {message && (
               <div className="form-group">
