@@ -5,10 +5,11 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
-import {Card, Form as Form, Button, Col}from "react-bootstrap";
+import { Card, Form as Form, Button, Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { register } from "../actions/auth";
 
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import "../style/MainStyleSheet.css";
 
 const required = (value) => {
@@ -85,27 +86,39 @@ class Register extends Component {
     this.handleChange = this.handleChange.bind(this);
 
 
-    this.state = initialState;
-    // {
-    //   username: "",
-    //   password: "",
-    //   repeatpassword: "",
-    //   firstname: "",
-    //   lastname: "",
-    //   dob: "",
-    //   address1: "",
-    //   address2: "",
-    //   state: "",
-    //   phone: "",
-    //   email: "",
-    //   ssn: "",
-    //   successful: false,
-    // };
+
+    this.state =
+    {
+      username: "",
+      password: "",
+      repeatpassword: "",
+      firstname: "",
+      lastname: "",
+      dob: "",
+      address1: "",
+      address2: "",
+      state: "",
+      phone: "",
+      email: "",
+      ssn: "",
+      terms: false,
+
+      usernameError: "",
+      passwordError: "",
+      repeatpasswordError: "",
+      nameError: "",
+      dobError: "",
+      address1Error: "",
+      stateError: "",
+      emailError: "",
+
+      successful: false,
+    };
   }
 
   isValidInputs = () => {
-    
-    let usernameError = "";
+
+    let usernameErrors = "";
     let passwordError = "";
     let repeatpasswordError = "";
     let nameError = "";
@@ -116,14 +129,14 @@ class Register extends Component {
     let emailError = "";
 
     if (!this.state.username || this.state.username.length < 3) {
-      usernameError = "Username must be at least 3 characters";
-      console.log("EMMPTY USERNAME", usernameError);
+      usernameErrors = "Username must be at least 3 characters";
+      console.log("EMMPTY USERNAME", usernameErrors);
     }
 
     if (!this.state.password || this.state.password.length < 5) {
       passwordError = "Password must be at least 5 characters";
     }
-    
+
     if (passwordError !== repeatpasswordError) {
       repeatpasswordError = "Passwords are not the same";
     }
@@ -150,25 +163,44 @@ class Register extends Component {
       emailError = "Invalid email";
     }
 
-    if (usernameError || passwordError || repeatpasswordError || nameError || dobError || address1Error || stateError || emailError) {
+    if (usernameErrors || passwordError || repeatpasswordError || nameError || dobError || address1Error || stateError || emailError) {
       this.setState({
-        usernameError : usernameError,
+        usernameError: usernameErrors,
         passwordError: passwordError,
         repeatpasswordError: repeatpasswordError,
-        nameError : nameError,
-        dobError : dobError,
-        address1Error : address1Error,
-        stateError : stateError,
-        emailError : emailError
+        nameError: nameError,
+        dobError: dobError,
+        address1Error: address1Error,
+        stateError: stateError,
+        emailError: emailError
+      }, () => {
+        console.log("SET USERNAME", usernameErrors, this.state.usernameError);
+        console.log(this.state);
       });
-      console.log("SET USERNAME", usernameError, this.state.usernameError);
-      console.log(this.state);
+
       return false;
     }
 
     return true;
-  
+
   }
+
+  // componentDidUpdate();
+
+  // componentDidMount() {
+  //   // custom rule will have name 'isPasswordMatch'
+  //   ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+  //       if (value !== this.state.user.password) {
+  //           return false;
+  //       }
+  //       return true;
+  //   });
+  // }
+
+  // componentWillUnmount() {
+  //     // remove rule when it is not needed
+  //     ValidatorForm.removeValidationRule('isPasswordMatch');
+  // }
 
 
 
@@ -180,7 +212,7 @@ class Register extends Component {
     });
 
     if (this.state.password !== this.state.repeatpassword) {
-      
+
     }
   }
 
@@ -191,23 +223,21 @@ class Register extends Component {
       successful: false,
     });
 
-    // this.form.validateAll();
-
     if (this.isValidInputs()) {
       this.props
         .dispatch(
           register(
-                    this.state.username, 
-                    this.state.password,
-                    this.state.firstname,
-                    this.state.lastname,
-                    this.state.dob,
-                    this.state.address1 + ", " + this.state.address2,
-                    this.state.state,
-                    this.state.phone,
-                    this.state.email, 
-                    this.state.ssn,
-                    ["user"])
+            this.state.username,
+            this.state.password,
+            this.state.firstname,
+            this.state.lastname,
+            this.state.dob,
+            this.state.address1 + ", " + this.state.address2,
+            this.state.state,
+            this.state.phone,
+            this.state.email,
+            this.state.ssn,
+            ["user"])
         )
         .then(() => {
           this.setState({
@@ -225,8 +255,8 @@ class Register extends Component {
             successful: false,
           });
         });
-    } 
-    
+    }
+
 
   }
 
@@ -235,275 +265,320 @@ class Register extends Component {
 
     return (
       <>
-        
-          
-       
+
+
+
         <Card className={"col-md-12"}>
           <Card.Header>
             <h1>Welcome to Starsrus!</h1>
           </Card.Header>
-            
-              <Form onSubmit={this.handleRegister} id="customerFormId" >
 
-                <Card.Body>
-                  <Form.Row>
-                        <Form.Group as={Col} controlId="formGridFullname">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control 
-                                type="text"
-                                name="username"
-                                value={this.state.username}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Maximum 30 Characters" 
-                                minLength="3"
-                                maxLength="30"
-                            />
-                            
-                            <Form.Control.Feedback type="invalid">{this.state.usernameError}</Form.Control.Feedback>
-                        </Form.Group>
-                  </Form.Row>
-                  <Form.Row>
-                        <Form.Group as={Col} controlId="formGridUsername">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="password"
-                                value={this.state.password}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Maximum 30 Characters" 
-                                minLength="6"
-                                maxLength="30"
-                            />
-                            <Form.Control.Feedback type="invalid">{this.state.passwordError}</Form.Control.Feedback>
-                        </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridUsername">
-                            <Form.Label>Repeat Password</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="repeatpassword"
-                                value={this.state.repeatpassword}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Maximum 30 Characters" 
-                                minLength="6"
-                                maxLength="30"
-                            />
-                        </Form.Group>
-                        <Form.Control.Feedback type="invalid">{this.state.repeatpasswordError}</Form.Control.Feedback>
-                  </Form.Row>
+          <Form onSubmit={this.handleRegister} id="customerFormId" >
 
-                  <Form.Row>
-                      <Form.Group as={Col} controlId="formGridUsername">
-                        <Form.Label>First Name</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="firstname"
-                                value={this.state.firstname}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Maximum 30 Characters" 
-                                maxLength="30"
-                            />
-                            <Form.Control.Feedback type="invalid">{this.state.firstnameError}</Form.Control.Feedback>
-                      </Form.Group>
+            <Card.Body>
+            <ValidatorForm
+                ref="form"
+                onSubmit={this.handleRegister}
+                onError={errors => console.log(errors)}>
 
-                      <Form.Group as={Col} controlId="formGridUsername">
-                        <Form.Label>Last Name</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="lastname"
-                                value={this.state.lastname}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Maximum 30 Characters" 
-                                maxLength="30"
-                            />
-                            <Form.Control.Feedback type="invalid">{this.state.lastnameError}</Form.Control.Feedback>
-                      </Form.Group>
-                  </Form.Row>
+            <Row>
+              <Col> 
+              <TextValidator
+                  label="Email"
+                  onChange={this.handleChange}
+                  name="username"
+                  value={this.state.username}
+                  validators={['required', 'isEmail']}
+                  errorMessages={['this field is required', 'email is not valid']}
 
-                  <Form.Row>
-                        <Form.Group as={Col} controlId="email">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control 
-                                type="email" 
-                                name="email"
-                                value={this.state.email}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="email@email.com" 
-                                isInvalid={message}
-                            />
-                            <Form.Control.Feedback type="invalid">{this.state.emailError}</Form.Control.Feedback>
-                        </Form.Group>       
 
-                        <Form.Group as={Col} controlId="dob">
-                            <Form.Label>Date of Birth</Form.Label>
-                            <Form.Control 
-                                type="date" 
-                                name="dob"
-                                value={this.state.dob}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Date of Birth" 
-                            />
-                            <Form.Control.Feedback type="invalid">{this.state.dobError}</Form.Control.Feedback>
-                        </Form.Group>
-                  </Form.Row>
+                /></Col>
+                              <Col> 
+              <TextValidator
+                  label="Email"
+                  onChange={this.handleChange}
+                  name="username"
+                  value={this.state.username}
+                  validators={['required', 'isEmail']}
+                  errorMessages={['this field is required', 'email is not valid']}
 
-                  <Form.Row>
-                        <Form.Group as={Col} controlId="address1" xs lg="5">
-                            <Form.Label>Address Line 1</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="address1"
-                                value={this.state.address1}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="1235 Main St, City" 
-                            />
-                            <Form.Control.Feedback type="invalid">{this.state.address1Error}</Form.Control.Feedback>
-                        </Form.Group>                        
-                        <Form.Group as={Col} controlId="address2" xs lg="5">
-                            <Form.Label>Address Line 2</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="address2"
-                                value={this.state.address2}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Apartment #123" 
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="formGridState">
-                            <Form.Label>State</Form.Label>
-                            <Form.Control 
-                                as="select"
-                                custom
-                                name="state"
-                                // value={this.state.state}
-                                onChange={this.handleChange}>
-                                    <option value="">Choose State</option>
-                                    <option value="AK">Alaska</option>
-                                    <option value="AL">Alabama</option>
-                                    <option value="AR">Arkansas</option>
-                                    <option value="AZ">Arizona</option>
-                                    <option value="CA">California</option>
-                                    <option value="CO">Colorado</option>
-                                    <option value="CT">Connecticut</option>
-                                    <option value="DC">District of Columbia</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="FL">Florida</option>
-                                    <option value="GA">Georgia</option>
-                                    <option value="HI">Hawaii</option>
-                                    <option value="IA">Iowa</option>
-                                    <option value="ID">Idaho</option>
-                                    <option value="IL">Illinois</option>
-                                    <option value="IN">Indiana</option>
-                                    <option value="KS">Kansas</option>
-                                    <option value="KY">Kentucky</option>
-                                    <option value="LA">Louisiana</option>
-                                    <option value="MA">Massachusetts</option>
-                                    <option value="MD">Maryland</option>
-                                    <option value="ME">Maine</option>
-                                    <option value="MI">Michigan</option>
-                                    <option value="MN">Minnesota</option>
-                                    <option value="MO">Missouri</option>
-                                    <option value="MS">Mississippi</option>
-                                    <option value="MT">Montana</option>
-                                    <option value="NC">North Carolina</option>
-                                    <option value="ND">North Dakota</option>
-                                    <option value="NE">Nebraska</option>
-                                    <option value="NH">New Hampshire</option>
-                                    <option value="NJ">New Jersey</option>
-                                    <option value="NM">New Mexico</option>
-                                    <option value="NV">Nevada</option>
-                                    <option value="NY">New York</option>
-                                    <option value="OH">Ohio</option>
-                                    <option value="OK">Oklahoma</option>
-                                    <option value="OR">Oregon</option>
-                                    <option value="PA">Pennsylvania</option>
-                                    <option value="PR">Puerto Rico</option>
-                                    <option value="RI">Rhode Island</option>
-                                    <option value="SC">South Carolina</option>
-                                    <option value="SD">South Dakota</option>
-                                    <option value="TN">Tennessee</option>
-                                    <option value="TX">Texas</option>
-                                    <option value="UT">Utah</option>
-                                    <option value="VA">Virginia</option>
-                                    <option value="VT">Vermont</option>
-                                    <option value="WA">Washington</option>
-                                    <option value="WI">Wisconsin</option>
-                                    <option value="WV">West Virginia</option>
-                                    <option value="WY">Wyoming</option>
-                                </Form.Control>
-                                <Form.Control.Feedback type="invalid">{this.state.stateError}</Form.Control.Feedback>
-                        </Form.Group>
-                        
-                  </Form.Row>
 
-                  <Form.Row>
-                        <Form.Group as={Col} controlId="formGridPhone">
-                            <Form.Label >Phone Number</Form.Label>
-                            <Form.Control 
-                                type="number"
-                                name="phone"
-                                value={this.state.phone}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Enter phone number" 
-                                max="999999999"
-                            />
-                            <Form.Control.Feedback type="invalid">{this.state.phoneError}</Form.Control.Feedback>
-                        </Form.Group>
-                        
+                /></Col>
+            </Row>
+              
+               
 
-                        <Form.Group as={Col} controlId="formGridPhone">
-                            <Form.Label >SSN</Form.Label>
-                            <Form.Control 
-                                type="number"
-                                name="ssn"
-                                value={this.state.ssn}
-                                onChange={this.handleChange}
-                                className={"mb3"}
-                                placeholder="Enter phone number" 
-                                max="999999999"
-                            />
-                            
-                        </Form.Group>
-                  </Form.Row>
-                  <Form.Row>
-                  <Form.Group>
-                        <Form.Check
-                          required
-                          name="terms"
-                          label="Agree to terms and conditions"
-                          onChange={this.handleChange}
-                          // isInvalid={!!errors.terms}
-                          // feedback={errors.terms}
-                          id="validationFormik0"
-                        />
-                      </Form.Group>
-                  </Form.Row>
 
-                </Card.Body>
+              </ValidatorForm>
 
-                <Card.Footer className="text-center">
-                    
-                    <Button type="summit" variant="rounded-corner" onClick={this.handleRegister} >
-                         Sign up
+
+
+
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridFullname">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Maximum 30 Characters"
+                    minLength="3"
+                    maxLength="30"
+                  />
+                  <Form.Label className="label-color">{this.state.usernameError}</Form.Label>
+                  <div style={{ color: "red" }}>{this.state.usernameError}</div>
+
+                </Form.Group>
+
+
+
+
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridUsername">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Maximum 30 Characters"
+                    minLength="6"
+                    maxLength="30"
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.passwordError}</Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridUsername">
+                  <Form.Label>Repeat Password</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="repeatpassword"
+                    value={this.state.repeatpassword}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Maximum 30 Characters"
+                    minLength="6"
+                    maxLength="30"
+                  />
+                </Form.Group>
+                <Form.Control.Feedback type="invalid">{this.state.repeatpasswordError}</Form.Control.Feedback>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridUsername">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="firstname"
+                    value={this.state.firstname}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Maximum 30 Characters"
+                    maxLength="30"
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.firstnameError}</Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridUsername">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="lastname"
+                    value={this.state.lastname}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Maximum 30 Characters"
+                    maxLength="30"
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.lastnameError}</Form.Control.Feedback>
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="email@email.com"
+                    isInvalid={message}
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.emailError}</Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="dob">
+                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="dob"
+                    value={this.state.dob}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Date of Birth"
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.dobError}</Form.Control.Feedback>
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="address1" xs lg="5">
+                  <Form.Label>Address Line 1</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="address1"
+                    value={this.state.address1}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="1235 Main St, City"
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.address1Error}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} controlId="address2" xs lg="5">
+                  <Form.Label>Address Line 2</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="address2"
+                    value={this.state.address2}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Apartment #123"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridState">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control
+                    as="select"
+                    custom
+                    name="state"
+                    // value={this.state.state}
+                    onChange={this.handleChange}>
+                    <option value="">Choose State</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DC">District of Columbia</option>
+                    <option value="DE">Delaware</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="IA">Iowa</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MD">Maryland</option>
+                    <option value="ME">Maine</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MT">Montana</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NY">New York</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="PR">Puerto Rico</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VA">Virginia</option>
+                    <option value="VT">Vermont</option>
+                    <option value="WA">Washington</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WY">Wyoming</option>
+                  </Form.Control>
+                  <Form.Control.Feedback type="invalid">{this.state.stateError}</Form.Control.Feedback>
+                </Form.Group>
+
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridPhone">
+                  <Form.Label >Phone Number</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="phone"
+                    value={this.state.phone}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Enter phone number"
+                    max="999999999"
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.phoneError}</Form.Control.Feedback>
+                </Form.Group>
+
+
+                <Form.Group as={Col} controlId="formGridPhone">
+                  <Form.Label >SSN</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="ssn"
+                    value={this.state.ssn}
+                    onChange={this.handleChange}
+                    className={"mb3"}
+                    placeholder="Enter phone number"
+                    max="999999999"
+                  />
+
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group>
+                  <Form.Check
+                    required
+                    name="terms"
+                    label="Agree to terms and conditions"
+                    onChange={this.handleChange}
+                    // isInvalid={!!errors.terms}
+                    // feedback={errors.terms}
+                    id="validationFormik0"
+                  />
+                </Form.Group>
+              </Form.Row>
+
+            </Card.Body>
+
+            <Card.Footer className="text-center">
+
+              <Button type="summit" variant="rounded-corner" onClick={this.handleRegister} >
+                Sign up
                     </Button>
 
-                </Card.Footer>
-              </Form>       
-            
+            </Card.Footer>
+          </Form>
 
-            
+
+
         </Card>
-      
+
       </>
     );
   }
