@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
 // import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+// import Input from "react-validation/build/input";
+// import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
-import { Card, Form as Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Form as Form, Button, Container, Row, Col, Modal} from "react-bootstrap";
 import { connect } from "react-redux";
 import { register } from "../actions/auth";
 
@@ -76,6 +76,8 @@ const initialState = {
   stateError: "",
   emailError: "",
 
+  modalshow: false,
+
   successful: false,
 };
 
@@ -84,7 +86,8 @@ class Register extends Component {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
+    this.handleClose = this.handleClose.bind(this);
+    this.handleShow = this.handleShow.bind(this);
 
 
     this.state =
@@ -133,11 +136,11 @@ class Register extends Component {
       console.log("EMMPTY USERNAME", usernameErrors);
     }
 
-    if (!this.state.password || this.state.password.length < 5) {
-      passwordError = "Password must be at least 5 characters";
+    if (!this.state.password || this.state.password.length < 6) {
+      passwordError = "Password must be at least 6 characters";
     }
 
-    if (passwordError !== repeatpasswordError) {
+    if (this.state.password !== this.state.repeatpassword) {
       repeatpasswordError = "Passwords are not the same";
     }
 
@@ -150,20 +153,22 @@ class Register extends Component {
     }
 
     if (!this.state.address1) {
-      address1Error = "Please input an address";
+      // address1Error = "Please input an address";
     }
 
     if (!this.state.state) {
       stateError = "Please choose a state";
     }
 
+    
+    
     if (!this.state.email) {
       emailError = "Email is required";
     } else if (!isEmail(this.state.email)) {
       emailError = "Invalid email";
     }
 
-    if (usernameErrors || passwordError || repeatpasswordError || nameError || dobError || address1Error || stateError || emailError) {
+    if (usernameErrors || passwordError || repeatpasswordError || nameError || dobError || stateError || emailError) {
       this.setState({
         usernameError: usernameErrors,
         passwordError: passwordError,
@@ -202,6 +207,19 @@ class Register extends Component {
   //     ValidatorForm.removeValidationRule('isPasswordMatch');
   // }
 
+  handleShow = () => {
+    this.setState({
+      modalshow: true
+    });
+    console.log("WTF", this.state.modalshow);
+  }
+
+  handleClose = () => {
+    this.setState({
+      modalshow: false
+    });
+    this.props.history.push('/login');
+  }
 
 
   handleChange = (e) => {
@@ -242,11 +260,12 @@ class Register extends Component {
         .then(() => {
           this.setState({
             successful: true,
-          });
+          }); 
 
           if (this.state.successful) {
-            alert("Signup sucessful!");
-            this.props.history.push('/login');
+            // alert("Signup sucessful!");
+            this.handleShow();
+            
           }
         })
         .catch((e) => {
@@ -277,48 +296,10 @@ class Register extends Component {
           <Form onSubmit={this.handleRegister} id="customerFormId" >
 
             <Card.Body>
-            <ValidatorForm
-                ref="form"
-                onSubmit={this.handleRegister}
-                onError={errors => console.log(errors)}>
-
-            <Row>
-              <Col> 
-              <TextValidator
-                  label="Email"
-                  onChange={this.handleChange}
-                  name="username"
-                  value={this.state.username}
-                  validators={['required', 'isEmail']}
-                  errorMessages={['this field is required', 'email is not valid']}
-
-
-                /></Col>
-                              <Col> 
-              <TextValidator
-                  label="Email"
-                  onChange={this.handleChange}
-                  name="username"
-                  value={this.state.username}
-                  validators={['required', 'isEmail']}
-                  errorMessages={['this field is required', 'email is not valid']}
-
-
-                /></Col>
-            </Row>
-              
-               
-
-
-              </ValidatorForm>
-
-
-
-
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridFullname">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label>Username*</Form.Label>
                   <Form.Control
                     type="text"
                     name="username"
@@ -329,8 +310,8 @@ class Register extends Component {
                     minLength="3"
                     maxLength="30"
                   />
-                  <Form.Label className="label-color">{this.state.usernameError}</Form.Label>
-                  <div style={{ color: "red" }}>{this.state.usernameError}</div>
+                  <Form.Label className="formlabel-color-red">{this.state.usernameError}</Form.Label>
+                  
 
                 </Form.Group>
 
@@ -340,7 +321,7 @@ class Register extends Component {
               </Form.Row>
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridUsername">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Password*</Form.Label>
                   <Form.Control
                     type="text"
                     name="password"
@@ -351,11 +332,12 @@ class Register extends Component {
                     minLength="6"
                     maxLength="30"
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.passwordError}</Form.Control.Feedback>
+                  <Form.Label className="formlabel-color-red">{this.state.passwordError}  {<div>{this.state.repeatpasswordError}</div>}</Form.Label>
+                  
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridUsername">
-                  <Form.Label>Repeat Password</Form.Label>
+                  <Form.Label>Repeat Password*</Form.Label>
                   <Form.Control
                     type="text"
                     name="repeatpassword"
@@ -367,12 +349,14 @@ class Register extends Component {
                     maxLength="30"
                   />
                 </Form.Group>
-                <Form.Control.Feedback type="invalid">{this.state.repeatpasswordError}</Form.Control.Feedback>
+              
+                {/* <Form.Label className="formlabel-color-red"></Form.Label> */}
+                
               </Form.Row>
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridUsername">
-                  <Form.Label>First Name</Form.Label>
+                  <Form.Label>First Name*</Form.Label>
                   <Form.Control
                     type="text"
                     name="firstname"
@@ -382,11 +366,13 @@ class Register extends Component {
                     placeholder="Maximum 30 Characters"
                     maxLength="30"
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.firstnameError}</Form.Control.Feedback>
+                  
+                  <Form.Label className="formlabel-color-red">{this.state.nameError}</Form.Label>
+
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridUsername">
-                  <Form.Label>Last Name</Form.Label>
+                  <Form.Label>Last Name*</Form.Label>
                   <Form.Control
                     type="text"
                     name="lastname"
@@ -396,13 +382,13 @@ class Register extends Component {
                     placeholder="Maximum 30 Characters"
                     maxLength="30"
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.lastnameError}</Form.Control.Feedback>
+                  
                 </Form.Group>
               </Form.Row>
 
               <Form.Row>
                 <Form.Group as={Col} controlId="email">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Email*</Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
@@ -412,11 +398,11 @@ class Register extends Component {
                     placeholder="email@email.com"
                     isInvalid={message}
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.emailError}</Form.Control.Feedback>
+                  <Form.Label className="formlabel-color-red">{this.state.emailError}</Form.Label>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="dob">
-                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Label>Date of Birth*</Form.Label>
                   <Form.Control
                     type="date"
                     name="dob"
@@ -425,13 +411,14 @@ class Register extends Component {
                     className={"mb3"}
                     placeholder="Date of Birth"
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.dobError}</Form.Control.Feedback>
+                  
+                  <Form.Label className="formlabel-color-red">{this.state.dobError}</Form.Label>
                 </Form.Group>
               </Form.Row>
 
               <Form.Row>
                 <Form.Group as={Col} controlId="address1" xs lg="5">
-                  <Form.Label>Address Line 1</Form.Label>
+                  <Form.Label>Address Line 1*</Form.Label>
                   <Form.Control
                     type="text"
                     name="address1"
@@ -440,7 +427,7 @@ class Register extends Component {
                     className={"mb3"}
                     placeholder="1235 Main St, City"
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.address1Error}</Form.Control.Feedback>
+
                 </Form.Group>
                 <Form.Group as={Col} controlId="address2" xs lg="5">
                   <Form.Label>Address Line 2</Form.Label>
@@ -454,7 +441,7 @@ class Register extends Component {
                   />
                 </Form.Group>
                 <Form.Group as={Col} controlId="formGridState">
-                  <Form.Label>State</Form.Label>
+                  <Form.Label>State*</Form.Label>
                   <Form.Control
                     as="select"
                     custom
@@ -515,14 +502,15 @@ class Register extends Component {
                     <option value="WV">West Virginia</option>
                     <option value="WY">Wyoming</option>
                   </Form.Control>
-                  <Form.Control.Feedback type="invalid">{this.state.stateError}</Form.Control.Feedback>
+                  
+                  <Form.Label className="formlabel-color-red">{this.state.stateError}</Form.Label>
                 </Form.Group>
 
               </Form.Row>
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridPhone">
-                  <Form.Label >Phone Number</Form.Label>
+                  <Form.Label >Phone Number*</Form.Label>
                   <Form.Control
                     type="number"
                     name="phone"
@@ -533,6 +521,7 @@ class Register extends Component {
                     max="999999999"
                   />
                   <Form.Control.Feedback type="invalid">{this.state.phoneError}</Form.Control.Feedback>
+                  <Form.Label className="formlabel-color-red">{this.state.passwordError}</Form.Label>
                 </Form.Group>
 
 
@@ -563,6 +552,9 @@ class Register extends Component {
                   />
                 </Form.Group>
               </Form.Row>
+              <Form.Row>
+                <Form.Label>* required</Form.Label>
+              </Form.Row>
 
             </Card.Body>
 
@@ -572,12 +564,27 @@ class Register extends Component {
                 Sign up
                     </Button>
 
+              
+
             </Card.Footer>
           </Form>
-
+          <Button variant="rounded-corner" onClick={this.handleShow} >
+                 up
+                    </Button>
 
 
         </Card>
+        <Modal show={this.state.modalshow} onHide={this.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Info</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Sign up successful!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.handleClose}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       </>
     );
