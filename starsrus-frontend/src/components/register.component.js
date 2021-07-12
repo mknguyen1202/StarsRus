@@ -323,7 +323,7 @@ class Register extends Component {
                 <Form.Group as={Col} controlId="formGridUsername">
                   <Form.Label>Password*</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="password"
                     name="password"
                     value={this.state.password}
                     onChange={this.handleChange}
@@ -339,7 +339,7 @@ class Register extends Component {
                 <Form.Group as={Col} controlId="formGridUsername">
                   <Form.Label>Repeat Password*</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="password"
                     name="repeatpassword"
                     value={this.state.repeatpassword}
                     onChange={this.handleChange}
@@ -568,9 +568,7 @@ class Register extends Component {
 
             </Card.Footer>
           </Form>
-          <Button variant="rounded-corner" onClick={this.handleShow} >
-                 up
-                    </Button>
+
 
 
         </Card>
