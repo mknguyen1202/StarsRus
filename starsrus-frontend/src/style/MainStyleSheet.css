@@ -1,0 +1,20 @@
+.btn-rounded-corner {
+
+    margin-right: 40;
+    margin-left: 40;
+    margin-top: 10;
+    padding-top: 20;
+    padding-bottom: 20;
+    background-color: #68a0cf;
+    border-color: #68a0cf;
+    color: white;
+    border-radius: 20px;
+    width: 500px;
+    
+}
+
+
+.formlabel-color-red {
+    color:red;
+    font-size: small;
+}
