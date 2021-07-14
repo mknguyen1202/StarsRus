@@ -19,13 +19,14 @@ import { clearMessage } from "./actions/message";
 import { history } from './helpers/history';
 
 // icon imports
-import home_icon from "./icons/home.png"
-import logout_icon from "./icons/logout.png"
-import messages_icon from "./icons/messages.png"
-import moderator_icon from "./icons/moderator.png"
-import notifications_icon from "./icons/notifications.png"
-import stock_market_icon from "./icons/stock_market.png"
-import user_icon from "./icons/user.png"
+import bookmarks_icon from "./icons/#12172D/bookmarks.png"
+import home_icon from "./icons/#12172D/home.png"
+import logout_icon from "./icons/#12172D/logout.png"
+import messages_icon from "./icons/#12172D/messages.png"
+import moderator_icon from "./icons/#12172D/moderator.png"
+import notifications_icon from "./icons/#12172D/notifications.png"
+import stock_market_icon from "./icons/#12172D/stock_market.png"
+import user_icon from "./icons/#12172D/user.png"
 
 class App extends Component {
   constructor(props) {
@@ -65,10 +66,15 @@ class App extends Component {
     return (
       <Router history={history}>
         <div>
-          <nav className="navbar navbar-expand navbar-dark bg-dark">
-            <Link to={"/home"} className="navbar-brand">
+          <nav class="navbar navbar-expand navbar-light bg-primary">
+            <Link to={"/home"} className="navbar-brand text-white fs-2">
               StarsRus
             </Link>
+
+            <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+              aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
+                class="fas fa-bars fa-1x"></i></span></button>
+
             <div className="navbar-nav mr-auto">
               {/* <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
@@ -106,6 +112,11 @@ class App extends Component {
                 <li className="nav-item">
                   <Link to={"/stock_market"} className="nav-link">
                     <img src={stock_market_icon} width="25" height="25" alt="Stock Market"/>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/bookmarks"} className="nav-link">
+                    <img src={bookmarks_icon} width="25" height="25" alt="Stock Market"/>
                   </Link>
                 </li>
                 <li className="nav-item">
