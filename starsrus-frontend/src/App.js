@@ -19,6 +19,7 @@ import { clearMessage } from "./actions/message";
 import { history } from './helpers/history';
 
 // icon imports
+import admin_icon from "./icons/#12172D/admin.png"
 import bookmarks_icon from "./icons/#12172D/bookmarks.png"
 import home_icon from "./icons/#12172D/home.png"
 import logout_icon from "./icons/#12172D/logout.png"
@@ -85,7 +86,7 @@ class App extends Component {
               {showModeratorBoard && (
                 <li className="nav-item">
                   <Link to={"/mod"} className="nav-link">
-                    Moderator Board
+                  <img src={moderator_icon} width="25" height="25" alt="Moderator Board"/>
                   </Link>
                 </li>
               )}
@@ -93,18 +94,10 @@ class App extends Component {
               {showAdminBoard && (
                 <li className="nav-item">
                   <Link to={"/admin"} className="nav-link">
-                    Admin Board
+                  <img src={admin_icon} width="25" height="25" alt="Admin Board"/>
                   </Link>
                 </li>
               )}
-
-              {/* {currentUser && (
-                <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
-                  <img src={user_icon} width="25" height="25" alt="User"/>
-                  </Link>
-                </li>
-              )} */}
             </div>
 
             {currentUser ? (

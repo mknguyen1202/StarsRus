@@ -1,23 +1,42 @@
 import React, { Component } from "react";
+import { Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
+import "./profile.component.css";
 
 class Profile extends Component {
-
   render() {
     const { user: currentUser } = this.props;
 
     if (!currentUser) {
-      return <Redirect to="/login" />;
+      return <Redirect to="/login"/>;
     }
 
     return (
       <div className="container">
-        <header className="jumbotron">
+        {/* <header className="jumbotron">
           <h3>
             <strong>{currentUser.username}</strong> Profile
           </h3>
-        </header>
+        </header> */}
+        <div class="div-with-bg">
+          <img src="https://avatars.githubusercontent.com/u/55862469?v=4" alt="edWHINE"></img>
+          <h1>
+            {currentUser.firstname + " " + currentUser.lastname}
+          </h1>
+        </div>
+        <Form class="post-box">
+          <Form.Group>
+            <Form.Control
+              as="textarea"
+              rows={4}
+              type="text"
+              name="post"
+              placeholder="What's on your mind?"
+              style={{ width: '67%' }}
+            />
+          </Form.Group>
+        </Form>
         <p>
           <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
           {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}

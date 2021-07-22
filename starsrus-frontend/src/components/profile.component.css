@@ -1,0 +1,19 @@
+.div-with-bg {
+    background-image: url("http://www.photos-public-domain.com/wp-content/uploads/2012/05/sky-blue-brick-wall-texture.jpg");
+    background-size: cover;
+    height: 250px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.div-with-bg img {
+    float: left;
+    height: 250px;
+    width: 250px;
+    padding: 20px;
+}
+
+.div-with-bg h1 {
+    float: left;
+    padding-top: 97px;
+}
