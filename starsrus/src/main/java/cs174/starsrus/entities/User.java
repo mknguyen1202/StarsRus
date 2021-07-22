@@ -148,7 +148,6 @@ public class User {
 		this.roles = roles;
 	}
 
-
 	public String getFirstname() {
 		return this.firstname;
 	}
