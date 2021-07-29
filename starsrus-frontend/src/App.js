@@ -5,13 +5,13 @@ import { Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import Login from "./components/login.component";
-import Register from "./components/register.component";
-import Home from "./components/home.component";
-import Profile from "./components/profile.component";
-import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
-import BoardAdmin from "./components/board-admin.component";
+import Login from "./components/endpoints/login.component";
+import Register from "./components/endpoints/register.component";
+import Home from "./components/endpoints/home.component";
+import Profile from "./components/endpoints/profile.component";
+import BoardUser from "./components/endpoints/board-user.component";
+import BoardModerator from "./components/endpoints/board-moderator.component";
+import BoardAdmin from "./components/endpoints/board-admin.component";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -21,7 +21,7 @@ import { history } from './helpers/history';
 // icon imports
 import admin_icon from "./icons/#12172D/admin.png"
 import bookmarks_icon from "./icons/#12172D/bookmarks.png"
-import home_icon from "./icons/#12172D/home.png"
+//import home_icon from "./icons/#12172D/home.png"
 import logout_icon from "./icons/#12172D/logout.png"
 import messages_icon from "./icons/#12172D/messages.png"
 import moderator_icon from "./icons/#12172D/moderator.png"
