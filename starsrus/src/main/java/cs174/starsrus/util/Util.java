@@ -1,5 +1,8 @@
 package cs174.starsrus.util;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -7,7 +10,12 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Random;
 
 import javax.swing.text.DateFormatter;
 
@@ -35,52 +43,10 @@ public class Util {
         return yearMonthObject.lengthOfMonth();
     };
 
-    private static DataSource getDataSource() {       
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        // dataSource.setDriverClassName(DRIVER);
-        dataSource.setUrl(JDBC_URL);
-        // dataSource.setUsername(USERNAME);
-        // dataSource.setPassword(PASSWORD);
-        return dataSource;
+    public static String getBackendDirectoryPath() {
+        return System.getProperty("user.dir");
     }
 
-    public static String getCurrentDateFromDBAsString() throws SQLException
-    {
-        String QUERY = "SELECT todays_date FROM TodaysDate";
-        String date = jdbcTemplate.queryForObject(QUERY, new Object[] {},
-        	            new BeanPropertyRowMapper<String>(String.class));
-        return date;
-    }
-
-    /**
-     * 
-     * @param date: in YYYY-MM-DD format
-     * @return 
-     * @throws SQLException
-     */
-    public static int setCurrentDateFromDBAsString(String date) throws SQLException
-    {
-        try {
-            String QUERY = "INSERT INTO TodaysDate VALUES(?)";
-            
-
-            if (date.equalsIgnoreCase("now")) {
-                LocalDate myDateObj = LocalDate.now();
-                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
-                date = myDateObj.format(myFormatObj);  
-            } 
-                
-            LocalDateTime datetime = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));             
-            
-
-            jdbcTemplate.update(QUERY, datetime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            return 1;
-        } catch (Exception e) {
-            //TODO: handle exception
-            e.printStackTrace();
-            return 0;
-        }
-    }
 
     /**
      * 
@@ -99,15 +65,103 @@ public class Util {
         return noOfDaysBetween;
     }
 
-    public static int addDefaultSystemDate(String defaultDate) {
-        try {
-            String QUERY = "INSERT INTO TodaysDate VALUES(?)";
-            jdbcTemplate.update(QUERY, defaultDate);
-            return 1;
-        } catch (Exception e) {
+    public static List<List<String>> getCSV_data(String filename, String delimiter) {
+        List<List<String>> records = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.trim().split(delimiter);
+                records.add(Arrays.asList(values));
+            }
+        } catch(IOException e) {
             e.printStackTrace();
         }
+        return records;
 
-        return 0;
     }
+
+    public static LocalDateTime getTimeNow() {
+        return LocalDateTime.now();
+    }
+
+    public static LocalDateTime getStartOfTheDate() {
+        LocalDate localDate = LocalDate.now();
+        return localDate.atStartOfDay();
+    }
+
+
+    public static Calendar getCalendarStartOfTheDate() {
+        Calendar date = new GregorianCalendar();
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        // System.out.println(date.getTime());
+        return date;
+    }
+
+    public static Calendar getCalendarNow() {
+        Calendar date = new GregorianCalendar();
+        return date;
+    }
+
+    public static Calendar getCalendarLastWeek() {
+        return getCalendarDaysAgo(7);
+    }
+
+    public static Calendar getCalendarLastMonth() {
+        return getCalendarMonthsAgo(1);
+    }
+
+    public static Calendar getCalendarLastYear() {
+        return getCalendarYearsAgo(1);
+    }
+
+    public static Calendar getCalendarYesterday() {
+        Calendar date = new GregorianCalendar();
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        date.add(Calendar.DAY_OF_MONTH, -1);
+        return date;
+    }
+    
+
+    public static Calendar getCalendarDaysAgo(int days) {
+        Calendar date = new GregorianCalendar();
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        date.add(Calendar.DAY_OF_MONTH, -1 * Math.abs(days));
+        return date;
+    }
+
+    public static Calendar getCalendarMonthsAgo(int months) {
+        Calendar date = new GregorianCalendar();
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        date.add(Calendar.MONTH, -1 * Math.abs(months));
+        return date;
+    }
+
+    public static Calendar getCalendarYearsAgo(int years) {
+        Calendar date = new GregorianCalendar();
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        date.add(Calendar.YEAR, -1 * Math.abs(years));
+        return date;
+    }
+
+    public static double generateRandomDecimal(double min, double max) {
+        Random r = new Random();
+        return (r.nextInt((int)((max-min)*10+1))+min*10) / 10.0;
+    }
+
 }

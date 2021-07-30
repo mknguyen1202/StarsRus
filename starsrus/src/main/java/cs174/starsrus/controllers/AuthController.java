@@ -75,6 +75,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+        System.out.println("----------------------- USERNAME: " + signUpRequest.getUsername());
+        System.out.println("----------------------- STATE: " + signUpRequest.getState());
+        System.out.println("----------------------- SSN: " + signUpRequest.getSsn());
+
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -86,6 +92,7 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
+
 
         // Create new user's account
         User user = new User(
