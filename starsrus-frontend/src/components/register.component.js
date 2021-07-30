@@ -296,6 +296,11 @@ class Register extends Component {
           <Form onSubmit={this.handleRegister} id="customerFormId" >
 
             <Card.Body>
+              <Form.Row>
+                <Form.Label className="formlabel-color-red">
+                  {message}
+                </Form.Label>
+              </Form.Row>
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridFullname">
@@ -521,7 +526,7 @@ class Register extends Component {
                     max="999999999"
                   />
                   <Form.Control.Feedback type="invalid">{this.state.phoneError}</Form.Control.Feedback>
-                  <Form.Label className="formlabel-color-red">{this.state.passwordError}</Form.Label>
+                  <Form.Label className="formlabel-color-red">{this.state.phoneError}</Form.Label>
                 </Form.Group>
 
 

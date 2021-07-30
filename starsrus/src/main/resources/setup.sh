@@ -12,3 +12,4 @@ then
 else
     echo "Not OS detected. Running script for Windows by default."
 fi
+
