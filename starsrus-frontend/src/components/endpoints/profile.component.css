@@ -2,7 +2,7 @@
     background-image: url("http://www.photos-public-domain.com/wp-content/uploads/2012/05/sky-blue-brick-wall-texture.jpg");
     background-size: cover;
     height: 250px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     width: 100%;
 }
 
@@ -16,4 +16,15 @@
 .div-with-bg h1 {
     float: left;
     padding-top: 97px;
+}
+
+.form-box {
+    float: left;
+    width: 67%;
+    padding-right: 20px;
+}
+
+.stock-list {
+    float: left;
+    width: 33%;
 }
