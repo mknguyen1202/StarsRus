@@ -1,11 +1,16 @@
 import React, { Component } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import StockList from '../StockList'
 import "./profile.component.css";
 
 class Profile extends Component {
+
+  postThis(e) {
+    console.log(e);
+  }
+
   render() {
     const { user: currentUser } = this.props;
 
@@ -33,6 +38,9 @@ class Profile extends Component {
               />
             </Form.Group>
           </Form>
+          <Button className="float-right" onClick={this.postThis}> 
+            Post
+          </Button>
         </div>
         <div className='stock-list'>
           <StockList
