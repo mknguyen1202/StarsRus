@@ -7,10 +7,29 @@ import "./profile.component.css";
 
 class Profile extends Component {
 
-  postThis(e) {
-    console.log(e);
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.postThis = this.postThis.bind(this);
+
+    this.state = {
+      post:"",  
+    };
   }
 
+  // TODO: Send to database,
+  //       Dynamic scroll view
+  postThis() {
+    console.log(this.state.post);
+  }
+
+  handleChange = (e) => {
+    // console.log(e.target.name);
+    // console.log(e.target.value);
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
   render() {
     const { user: currentUser } = this.props;
 
@@ -35,6 +54,8 @@ class Profile extends Component {
                 type="text"
                 name="post"
                 placeholder="What's on your mind?"
+                value={this.state.post}
+                onChange={this.handleChange}
               />
             </Form.Group>
           </Form>

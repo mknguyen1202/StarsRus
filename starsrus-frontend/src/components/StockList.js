@@ -25,9 +25,9 @@ function StockList(props) {
                     <td>Quantity</td>
                 </thead>
                 <tr>
-                    <td>Facebook</td>
+                    <td>Inductive Automation</td>
                     <td>__/\__</td>
-                    <td>$120.67</td>
+                    <td>$420.69</td>
                 </tr>
                 <tr>
                     <td>Lucid Circuit</td>
@@ -35,7 +35,7 @@ function StockList(props) {
                     <td>$-0.69</td>
                 </tr>
                 <tr>
-                    <td>Tree Inc.</td>
+                    <td>Savioke Inc.</td>
                     <td>____|</td>
                     <td>$4.20</td>
                 </tr>
